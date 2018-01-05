@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 3.9
-Tested up to: 4.8
-Stable tag: 1.0.0
+Tested up to: 4.9.1
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Stronger security solution which protects your WordPress website from hacks and 
 
 == Description ==
 
-Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords steal. Each user can configure their profile settings and add additional verification step to the login form.
+Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.
 
 Protect your WordPress website with 2-Step Verification now!
 
@@ -125,10 +125,16 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.1 - 05.01.2018 =
+* Update : All functionality for WordPress 4.9.1 was updated.
+
 = V1.0.0 - 30.06.2017 =
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
 
+= V1.0.1 =
+* The compatibility with new WordPress version updated.
+
 = V1.0.0 =
-* Plugin release
+* Plugin release.

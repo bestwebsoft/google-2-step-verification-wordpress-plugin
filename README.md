@@ -1,7 +1,7 @@
 <a href="https://bestwebsoft.com/products/wordpress/plugins/google-2-step-verification/" target=_blank>Google 2-Step Verification WordPress Plugin</a>
 ========================
 
-<p>Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords steal. Each user can configure their profile settings and add additional verification step to the login form.</p>
+<p>Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.</p>
 <p>Protect your WordPress website with 2-Step Verification now!</p>
 <h4>Free Features</h4>
 <ul>

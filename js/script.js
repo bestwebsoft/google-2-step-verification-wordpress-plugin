@@ -1,5 +1,5 @@
-( function( $ ) {
-	$( document ).ready( function() {
+(function( $ ) {
+	$( document ).ready(function() {
 		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email' ).hide();
 
 		var form = $( '.gglstpvrfctn-login-wrap' ).closest( 'form' );
@@ -90,5 +90,5 @@
 				} );
 			} );
 		}
-	} );
-} )( jQuery );
+	});
+})( jQuery );

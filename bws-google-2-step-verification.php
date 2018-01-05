@@ -6,7 +6,7 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.0
+Version: 1.0.1
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */
@@ -60,11 +60,12 @@ if ( ! function_exists( 'gglstpvrfctn_admin_menu' ) ) {
 		);
 
 		/* Add "Go Pro" submenu link */
-		if ( isset( $submenu['google-2-step-verification.php'] ) )
+		if ( isset( $submenu['google-2-step-verification.php'] ) ) {
 			$submenu['google-2-step-verification.php'][] = array(
 				'<span style="color:#d86463"> ' . __( 'Upgrade to Pro', 'bws-google-2-step-verification' ) . '</span>',
 				'manage_options',
 				'https://bestwebsoft.com/products/wordpress/plugins/google-2-step-verification/?k=cafb0895a5730b761de64b55183d7a5b&pn=670&v=' . $gglstpvrfctn_plugin_info["Version"] . '&wp_v=' . $wp_version );
+		}
 
 		add_action( 'load-' . $settings, 'gglstpvrfctn_add_tabs' );
 	}
@@ -83,8 +84,9 @@ if ( ! function_exists( 'gglstpvrfctn_init' ) ) {
 		global $gglstpvrfctn_plugin_info, $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods;
 
 		if ( empty( $gglstpvrfctn_plugin_info ) ) {
-			if ( ! function_exists( 'get_plugin_data' ) )
+			if ( ! function_exists( 'get_plugin_data' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
 			$gglstpvrfctn_plugin_info = get_plugin_data( __FILE__ );
 		}
 
@@ -100,8 +102,9 @@ if ( ! function_exists( 'gglstpvrfctn_init' ) ) {
 
 		$gglstpvrfctn_enabled_methods = array();
 		foreach ( $gglstpvrfctn_options['methods'] as $method => $is_enabled ) {
-			if ( $is_enabled )
+			if ( $is_enabled ) {
 				$gglstpvrfctn_enabled_methods[ $method ] = $method;
+			}
 		}
 
 		if ( ! is_admin() && ! empty( $gglstpvrfctn_enabled_methods ) ) {
@@ -123,7 +126,7 @@ if ( ! function_exists( 'gglstpvrfctn_admin_init' ) ) {
 		global $bws_plugin_info, $gglstpvrfctn_plugin_info, $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods, $current_user;
 
 		/* Function for bws menu */
-		if ( empty( $bws_plugin_info ) )	{
+		if ( empty( $bws_plugin_info ) ) {
 			$bws_plugin_info = array( 'id' => '670', 'version' => $gglstpvrfctn_plugin_info["Version"] );
 		}
 
@@ -163,11 +166,11 @@ if ( ! function_exists( 'gglstpvrfctn_settings' ) ) {
 
 		if ( is_multisite() ) {
 			if ( ! get_site_option( 'gglstpvrfctn_key' ) ) {
-				update_site_option( 'gglstpvrfctn_key', gglstpvrfctn_generate_code( 16, 'base32') );
+				update_site_option( 'gglstpvrfctn_key', gglstpvrfctn_generate_code( 16, 'base32' ) );
 			}
 		} else {
 			if ( ! get_option( 'gglstpvrfctn_key' ) ) {
-				update_option( 'gglstpvrfctn_key', gglstpvrfctn_generate_code( 16, 'base32') );
+				update_option( 'gglstpvrfctn_key', gglstpvrfctn_generate_code( 16, 'base32' ) );
 			}
 		}
 
@@ -203,7 +206,7 @@ if ( ! function_exists( 'gglstpvrfctn_get_options_default' ) ) {
 													"{profile_page}",
 			'new_code_email_subject'			=> __( 'Verification Code', 'bws-google-2-step-verification' ),
 			'new_code_email_message'			=> __( "Your verification code is {new_code}.", 'bws-google-2-step-verification' ) . "\n\n" .
-													__( "You have received this message because someone has just tried to sign in your account at {site_url} and requested 2-Step verification code.", 'bws-google-2-step-verification' )
+													__( "You have received this message because someone has just tried to sign in to your account at {site_url} and requested 2-Step verification code.", 'bws-google-2-step-verification' )
 		);
 
 		return $default_options;
@@ -249,12 +252,14 @@ if ( ! function_exists( 'gglstpvrfctn_authenticate' ) ) {
 	function gglstpvrfctn_authenticate( $user ) {
 		global $gglstpvrfctn_enabled_methods;
 
-		if ( ! ( $user instanceof WP_User ) )
+		if ( ! ( $user instanceof WP_User ) ) {
 			return $user;
+		}
 
 		/* User has enabled second step verification */
-		if ( isset( $_REQUEST['gglstpvrfctn-request-email'] ) )
+		if ( isset( $_REQUEST['gglstpvrfctn-request-email'] ) ) {
 			return gglstpvrfctn_request_email( $user->ID );
+		}
 
 		$code = isset( $_POST['gglstpvrfctn-code'] ) ? $_POST['gglstpvrfctn-code'] : '';
 
@@ -275,8 +280,9 @@ if ( ! function_exists( 'gglstpvrfctn_request_email' ) ) {
 	function gglstpvrfctn_request_email( $user_id ) {
 		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_user_options;
 
-		if ( empty( $gglstpvrfctn_user_options ) )
+		if ( empty( $gglstpvrfctn_user_options ) ) {
 			gglstpvrfctn_get_user_options( $user_id );
+		}
 
 		$result = new WP_Error;
 		if ( isset( $gglstpvrfctn_enabled_methods['email'] ) && ! empty( $gglstpvrfctn_user_options['enabled'] ) && ! empty( $gglstpvrfctn_user_options['email'] ) ) {
@@ -307,8 +313,9 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods;
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 
-		if ( empty( $user_options['enabled'] ) )
+		if ( empty( $user_options['enabled'] ) ) {
 			return true;
+		}
 
 		$error = new WP_Error();
 
@@ -327,14 +334,16 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 			) ) {
 				$check = true;
 				$check_function = "gglstpvrfctn_check_{$method}_code";
-				if ( $check_function( $user_id, $code ) )
+				if ( $check_function( $user_id, $code ) ) {
 					return true;
+				}
 			}
 		}
 
 		/* If no verification methods available for this user */
-		if ( ! $check )
+		if ( ! $check ) {
 			return true;
+		}
 
 		/* Verification Failed */
 		$error_message = sprintf(
@@ -424,8 +433,9 @@ if ( ! function_exists ( 'gglstpvrfctn_plugin_banner' ) ) {
 	function gglstpvrfctn_plugin_banner() {
 		global $hook_suffix, $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods, $gglstpvrfctn_plugin_info, $current_user;
 		if ( 'plugins.php' == $hook_suffix ) {
-			if ( isset( $gglstpvrfctn_options['first_install'] ) && strtotime( '-1 week' ) > $gglstpvrfctn_options['first_install'] )
+			if ( isset( $gglstpvrfctn_options['first_install'] ) && strtotime( '-1 week' ) > $gglstpvrfctn_options['first_install'] ) {
 				bws_plugin_banner( $gglstpvrfctn_plugin_info, 'gglstpvrfctn', 'google-2-step-verification', '2714538480080da6f027d0606a3c29ef', '670', '//ps.w.org/bws-google-2-step-verification/assets/icon-128x128.png' );
+			}
 			bws_plugin_banner_to_settings( $gglstpvrfctn_plugin_info, 'gglstpvrfctn_options', 'bws-google-2-step-verification', 'admin.php?page=google-2-step-verification.php' );
 		}
 
@@ -506,8 +516,9 @@ if ( ! function_exists( 'gglstpvrfctn_check_email_code' ) ) {
 		global $gglstpvrfctn_options;
 		$email_init_time = get_user_meta( $user_id, 'gglstpvrfctn_email_init_time', true );
 
-		if ( ! $email_init_time )
+		if ( ! $email_init_time ) {
 			return false;
+		}
 
 		$email_expiration_time = intval( $email_init_time ) + intval( $gglstpvrfctn_options['email_expiration'] ) * 60;
 		$current_time = time();
@@ -578,10 +589,10 @@ if ( ! function_exists( 'gglstpvrfctn_check_authenticator_code' ) ) {
 			$bin_counter = implode( $current_counter );
 
 			if ( strlen( $bin_counter ) < 8 ) {
-				$bin_counter = str_repeat( chr(0), 8 - strlen( $bin_counter ) ) . $bin_counter;
+				$bin_counter = str_repeat( chr( 0 ), 8 - strlen( $bin_counter ) ) . $bin_counter;
 			}
 
-			$hash = hash_hmac('sha1', $bin_counter, $key);
+			$hash = hash_hmac( 'sha1', $bin_counter, $key );
 
 			$length = 6;
 			$hash_converted = array();
@@ -598,8 +609,9 @@ if ( ! function_exists( 'gglstpvrfctn_check_authenticator_code' ) ) {
 				( $hash_converted[ $offset + 3 ] & 0xff )
 			) % pow( 10, $length );
 
-			if ( $code == $user_code )
+			if ( $code == $user_code ) {
 				return true;
+			}
 		}
 
 		return false;
@@ -678,8 +690,8 @@ if ( ! function_exists( 'gglstpvrfctn_encode_string' ) ) {
 		$key .= $current_user->ID;
 
 		if ( function_exists( 'openssl_encrypt' ) ) {
-			$iv = openssl_random_pseudo_bytes( openssl_cipher_iv_length('AES-128-CBC') );
-			$data = $iv . openssl_encrypt( $string, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv );
+			$iv = openssl_random_pseudo_bytes( openssl_cipher_iv_length( 'AES-128-CBC' ) );
+			$data = $iv . openssl_encrypt( $string, 'AES-128-CBC', $key, 1, $iv );
 		} else {
 			/* string will be stored unencrypted */
 			$data = $key . base64_encode( $string );
@@ -706,10 +718,10 @@ if ( ! function_exists( 'gglstpvrfctn_decode_string' ) ) {
 		$data = base64_decode( $encrypted );
 
 		if ( function_exists( 'openssl_decrypt' ) ) {
-			$iv_size = openssl_cipher_iv_length('AES-128-CBC');
+			$iv_size = openssl_cipher_iv_length( 'AES-128-CBC' );
 			$iv = substr( $data, 0, $iv_size );
 			$data = substr( $data, $iv_size );
-			$decrypted = openssl_decrypt( $data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv );
+			$decrypted = openssl_decrypt( $data, 'AES-128-CBC', $key, 1, $iv );
 		} else {
 			/* string should be unencrypted */
 			$data = substr( $data, strlen( $key ) );
@@ -732,8 +744,9 @@ if ( ! function_exists( 'gglstpvrfctn_get_user_secret' ) ) {
 	function gglstpvrfctn_get_user_secret( $user_id = 0 ) {
 		$meta_value = get_user_meta( $user_id, 'gglstpvrfctn_user_secret', true );
 
-		if ( ! $meta_value )
+		if ( ! $meta_value ) {
 			return false;
+		}
 
 		return gglstpvrfctn_decode_string( $meta_value, $user_id );
 	}
@@ -749,8 +762,9 @@ if ( ! function_exists( 'gglstpvrfctn_get_backup_codes' ) ) {
 	function gglstpvrfctn_get_backup_codes( $user_id = 0 ) {
 		$codes = get_user_meta( $user_id, 'gglstpvrfctn_backup_code' );
 
-		if ( ! $codes )
+		if ( ! $codes ) {
 			return false;
+		}
 
 		foreach ( $codes as $key => $code ) {
 			$codes[ $key ] = gglstpvrfctn_decode_string( $code, $user_id );
@@ -796,7 +810,7 @@ if ( ! function_exists( 'gglstpvrfctn_test_secret' ) ) {
 if ( ! function_exists( 'gglstpvrfctn_get_new_secret' ) ) {
 	function gglstpvrfctn_get_new_secret() {
 		check_ajax_referer( 'gglstpvrfctn_ajax_nonce_value', 'gglstpvrfctn_nonce' );
-		echo gglstpvrfctn_generate_code( 16, 'base32');
+		echo gglstpvrfctn_generate_code( 16, 'base32' );
 		wp_die();
 	}
 }
@@ -879,14 +893,13 @@ if ( ! function_exists( 'gglstpvrfctn_download_backup_codes' ) ) {
 			$content .= __( "Visit the following page to generate new codes", 'bws-google-2-step-verification' ) . ":\n";
 			$content .= admin_url( 'profile.php#gglstpvrfctn-generate-backup-codes' );
 
-			header('Content-Type: text/plain'); /* you can change this based on the file type */
-			header('Content-Disposition: attachment; filename="backup_codes.txt"');
+			header( 'Content-Type: text/plain' ); /* you can change this based on the file type */
+			header( 'Content-Disposition: attachment; filename="backup_codes.txt"' );
 			echo $content;
 			exit();
 		}
 	}
 }
-
 
 /**
  * Get verification options status for specified user id
@@ -899,8 +912,9 @@ if ( ! function_exists( 'gglstpvrfctn_get_user_options' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_user_options;
 
 		$user = get_userdata( $user_id );
-		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) )
+		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) ) {
 			return array( 'enabled' => 0 );
+		}
 
 		$gglstpvrfctn_user_options = get_user_meta( $user_id, "gglstpvrfctn_user_options", true );
 
@@ -910,8 +924,9 @@ if ( ! function_exists( 'gglstpvrfctn_get_user_options' ) ) {
 			$gglstpvrfctn_user_options = json_decode( $gglstpvrfctn_user_options, true );
 		}
 
-		if ( is_array( $gglstpvrfctn_user_options ) )
+		if ( is_array( $gglstpvrfctn_user_options ) ) {
 			return $gglstpvrfctn_user_options;
+		}
 
 		return array( 'enabled' => 0 );
 	}
@@ -943,17 +958,18 @@ if ( ! function_exists( 'gglstpvrfctn_send_email' ) ) {
 
 		$user = get_userdata( $user_id );
 
-		if ( ! $user instanceof WP_User )
+		if ( ! $user instanceof WP_User ) {
 			return false;
+		}
 
 		$args = array(
 			'user_name'		=> $user->display_name,
 			'user_email'	=> $user->user_email
 		);
 
-		if ( ! empty($_SERVER['HTTP_CLIENT_IP'] ) ) {
+		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			$args['user_ip'] = filter_var( $_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP );
-		} elseif ( ! empty($_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$args['user_ip'] = filter_var( $_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP );
 		} else {
 			$args['user_ip'] = filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP );
@@ -1088,12 +1104,14 @@ if ( ! function_exists( 'gglstpvrfctn_check_verification_options' ) ) {
 				$user_options = gglstpvrfctn_get_user_options( $user->ID );
 				if ( ! empty( $user_options['enabled'] ) ) {
 					foreach ( $gglstpvrfctn_enabled_methods as $method ) {
-						if ( ! empty( $user_options[ $method ] ) )
+						if ( ! empty( $user_options[ $method ] ) ) {
 							$result['methods'][] = $method;
+						}
 					}
 
-					if ( ! empty( $result['methods'] ) )
+					if ( ! empty( $result['methods'] ) ) {
 						$result['enabled'] = 1;
+					}
 				}
 			}
 		}
@@ -1114,9 +1132,9 @@ if ( ! function_exists( 'gglstpvrfctn_login_form' ) ) {
 					<input type="text" id="gglstpvrfctn-code" name="gglstpvrfctn-code">
 				</label>
 			</p>
-			<noscript><p class="gglstpvrfctn-description"><?php _e( 'Fill in if you enabled 2-Step verification for your profile', 'bws-google-2-step-verification' ); ?></p></noscript>
+			<noscript><p class="gglstpvrfctn-description"><?php _e( 'Insert the code if you enabled 2-Step verification for your profile', 'bws-google-2-step-verification' ); ?></p></noscript>
 			<button class="gglstpvrfctn-request-email gglstpvrfctn-link-button hidden" name="gglstpvrfctn-request-email">
-				<?php _e( 'Send me a code in email', 'bws-google-2-step-verification' ); ?>
+				<?php _e( 'Send me a code via email', 'bws-google-2-step-verification' ); ?>
 			</button>
 			<div class="clear gglstpvrfctn-clear"></div>
 		</div><!-- .gglstpvrfctn-login-wrap -->
@@ -1137,8 +1155,9 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods, $current_user;
 
 		/* If verification is disabled */
-		if ( ! array_intersect( ( array )$current_user->roles, $gglstpvrfctn_options['enabled_roles'] ) )
+		if ( ! array_intersect( ( array )$current_user->roles, $gglstpvrfctn_options['enabled_roles'] ) ) {
 			return;
+		}
 
 		/* Retrieving user options */
 		$user_options = gglstpvrfctn_get_user_options( $current_user->ID );
@@ -1148,15 +1167,16 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 		$secret_is_verified	= !! gglstpvrfctn_get_user_secret( $current_user->ID );
 		$verified_style		= $secret_is_verified ? '' : 'style="display: none;"';
 		$not_verified_style	= ! $secret_is_verified ? '' : 'style="display: none;"';
-		$new_secret = gglstpvrfctn_generate_code( 16, 'base32');
+		$new_secret = gglstpvrfctn_generate_code( 16, 'base32' );
 
 		/* Check backup codes */
 		$backup_codes = gglstpvrfctn_get_backup_codes( $current_user->ID );
-		if ( ! $backup_codes )
+		if ( ! $backup_codes ) {
 			$backup_codes = array();
+		}
 
 		$codes_count = count( $backup_codes );
-		$no_codes_style = ( 0 == $codes_count ) ? "display: none;" : "";
+		$no_codes_style = ( empty( $codes_count ) ) ? "display: none;" : "";
 		$download_url = admin_url( 'admin.php?action=gglstpvrfctn_download_codes&gglstpvrfctn_nonce=' . wp_create_nonce( 'gglstpvrfctn_backup_codes_link' ) ); ?>
 		<h2><?php _e( 'Google 2-Step Verification', 'bws-google-2-step-verification' ); ?></h2>
 		<table class="form-table">
@@ -1337,8 +1357,9 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile' ) ) {
 		$user = ( $user_id == $current_user->ID ) ? $current_user : get_userdata( $user_id );
 
 		/* If verification is disabled */
-		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) )
+		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) ) {
 			return;
+		}
 
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 		$enabled = isset( $user_options['enabled'] ) ? !! $user_options['enabled'] : false; ?>
@@ -1368,8 +1389,9 @@ if ( ! function_exists( 'gglstpvrfctn_personal_options_update' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods, $current_user;
 
 		/* If verification is disabled */
-		if ( ! array_intersect( ( array )$current_user->roles, $gglstpvrfctn_options['enabled_roles'] ) )
+		if ( ! array_intersect( ( array )$current_user->roles, $gglstpvrfctn_options['enabled_roles'] ) ) {
 			return;
+		}
 
 		$user_secret = gglstpvrfctn_get_user_secret( $current_user->ID );
 		if ( isset( $_POST['gglstpvrfctn-check-code'] ) ) {
@@ -1404,11 +1426,11 @@ if ( ! function_exists( 'gglstpvrfctn_personal_options_update' ) ) {
 		}
 
 		if (
-			0 == $methods_count ||
+			empty( $methods_count ) ||
 			! (
-				( isset( $gglstpvrfctn_enabled_methods['email'] ) && 1 == $user_options['email'] ) ||
-				( isset( $gglstpvrfctn_enabled_methods['authenticator'] ) && 1 == $user_options['authenticator'] && ! empty( $user_secret ) ) ||
-				( isset( $gglstpvrfctn_enabled_methods['backup_code'] ) && 1 == $user_options['backup_code'] && ! empty( $backup_codes ) )
+				( isset( $gglstpvrfctn_enabled_methods['email'] ) && ! empty( $user_options['email'] ) ) ||
+				( isset( $gglstpvrfctn_enabled_methods['authenticator'] ) && ! empty( $user_options['authenticator'] ) && ! empty( $user_secret ) ) ||
+				( isset( $gglstpvrfctn_enabled_methods['backup_code'] ) && ! empty( $user_options['backup_code'] ) && ! empty( $backup_codes ) )
 			)
 		) {
 			$user_options['enabled'] = 0;
@@ -1433,14 +1455,15 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile_update' ) ) {
 		$user = ( $user_id == $current_user->ID ) ? $current_user : get_userdata( $user_id );
 
 		/* If verification is disabled */
-		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) )
+		if ( ! array_intersect( ( array )$user->roles, $gglstpvrfctn_options['enabled_roles'] ) ) {
 			return;
+		}
 
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 
 		$user_options['enabled'] = isset( $_REQUEST['gglstpvrfctn-enabled'] ) ? 1 : 0;
 		/* At least one method have to be enabled if verification is enabled, email is the only suitable */
-		if ( 1 == $user_options['enabled'] ) {
+		if ( ! empty( $user_options['enabled'] ) ) {
 			$user_options['email'] = 1;
 		}
 		update_user_meta( $user_id, 'gglstpvrfctn_user_options', json_encode( $user_options ) );
@@ -1511,7 +1534,9 @@ if ( ! function_exists ( 'gglstpvrfctn_links' ) ) {
 	function gglstpvrfctn_links( $links, $file ) {
 		$base = plugin_basename( __FILE__ );
 		if ( $file == $base ) {
-			$links[]	=	'<a href="admin.php?page=google-2-step-verification.php">' . __( 'Settings', 'bws-google-2-step-verification' ) . '</a>';
+			if ( ! is_network_admin() ) {
+				$links[]	=	'<a href="admin.php?page=google-2-step-verification.php">' . __( 'Settings', 'bws-google-2-step-verification' ) . '</a>';
+			}
 			$links[]	=	'<a href="https://support.bestwebsoft.com/hc/en-us/sections/115000850886" target="_blank">' . __( 'FAQ', 'bws-google-2-step-verification' ) . '</a>';
 			$links[]	=	'<a href="https://support.bestwebsoft.com">' . __( 'Support', 'bws-google-2-step-verification' ) . '</a>';
 		}
@@ -1524,10 +1549,11 @@ if ( ! function_exists( 'gglstpvrfctn_action_links' ) ) {
 	function gglstpvrfctn_action_links( $links, $file ) {
 		/* Static so we don't call plugin_basename on every plugin row. */
 		static $this_plugin;
-		if ( ! $this_plugin )
+		if ( ! $this_plugin ) {
 			$this_plugin = plugin_basename( __FILE__ );
+		}
 
-		if ( $file == $this_plugin ) {
+		if ( ! is_network_admin() && $file == $this_plugin ) {
 			$settings_link = '<a href="admin.php?page=google-2-step-verification.php">' . __( 'Settings', 'bws-google-2-step-verification' ) . '</a>';
 			array_unshift( $links, $settings_link );
 		}
@@ -1541,8 +1567,9 @@ if ( ! function_exists( 'gglstpvrfctn_delete_options' ) ) {
 	function gglstpvrfctn_delete_options() {
 		global $wpdb;
 
-		if ( ! function_exists( 'get_plugins' ) )
+		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
 		$all_plugins = get_plugins();
 
 		if ( ! array_key_exists( 'bws-google-2-step-verification-pro/bws-google-2-step-verification-pro.php', $all_plugins ) ) {

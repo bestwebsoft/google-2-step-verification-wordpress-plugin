@@ -78,7 +78,6 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 			$this->options['email_expiration'] = absint( $_POST["gglstpvrfctn_email_expiration"] );
 			$this->options['authenticator_time_window'] = absint( $_POST["gglstpvrfctn_authenticator_time_window"] );
 
-
 			$this->options['enabled_roles'] = array();
 			if ( isset( $_POST['gglstpvrfctn-all-roles'] ) ) {
 				$this->options['enabled_roles'] = array_keys( $this->editable_roles );

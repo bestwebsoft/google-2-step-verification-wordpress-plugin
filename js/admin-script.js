@@ -1,5 +1,5 @@
-( function( $ ) {
-	$( document ).ready( function() {
+(function( $ ) {
+	$( document ).ready(function() {
 
 		/* Plugin Settings Page */
 
@@ -44,5 +44,5 @@
 				}
 			} );
 		} );
-	} );
-} )( jQuery );
+	});
+})( jQuery );
