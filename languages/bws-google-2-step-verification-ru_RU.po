@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bws-google-2-step-verification\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 13:49+0200\n"
-"PO-Revision-Date: 2017-11-29 13:55+0200\n"
+"POT-Creation-Date: 2018-02-26 13:14+0200\n"
+"PO-Revision-Date: 2018-02-26 13:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: BestWebSoft <plugin@bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -19,14 +19,14 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: bws-google-2-step-verification.php:36 bws-google-2-step-verification.php:46
-#: bws-google-2-step-verification.php:1181
-#: bws-google-2-step-verification.php:1367
+#: bws-google-2-step-verification.php:1192
+#: bws-google-2-step-verification.php:1378
 msgid "Google 2-Step Verification"
 msgstr "Google 2-Step Verification"
 
-#: bws-google-2-step-verification.php:47 bws-google-2-step-verification.php:371
-#: bws-google-2-step-verification.php:1538
-#: bws-google-2-step-verification.php:1557
+#: bws-google-2-step-verification.php:47 bws-google-2-step-verification.php:375
+#: bws-google-2-step-verification.php:1549
+#: bws-google-2-step-verification.php:1568
 #: includes/class-gglstpvrfctn-settings.php:25
 msgid "Settings"
 msgstr "Настройки"
@@ -76,28 +76,33 @@ msgstr ""
 "аккаунт на {site_url} и запросил получение кода для Google 2-Step "
 "Verification."
 
-#: bws-google-2-step-verification.php:290
-#: bws-google-2-step-verification.php:1073
+#: bws-google-2-step-verification.php:294
+#: bws-google-2-step-verification.php:1079
 msgid "Verification code has been sent. Please check your email."
 msgstr "Код верификации был отправлен. Пожалуйста, проверьте вашу почту."
 
-#: bws-google-2-step-verification.php:292
+#: bws-google-2-step-verification.php:296
 msgid "Some problems occured during email sending."
 msgstr "При отправке email возникли проблемы."
 
-#: bws-google-2-step-verification.php:295
+#: bws-google-2-step-verification.php:299
 msgid "Verification with email code is disabled for this user."
 msgstr "Для этого пользователя отключена верификация по email коду."
 
-#: bws-google-2-step-verification.php:351
+#: bws-google-2-step-verification.php:355
 msgid "ERROR"
 msgstr "Ошибка"
 
-#: bws-google-2-step-verification.php:352
+#: bws-google-2-step-verification.php:356
 msgid "Google 2-Step verification failed."
 msgstr "Проверка Google 2-Step Verification не пройдена."
 
-#: bws-google-2-step-verification.php:463
+#: bws-google-2-step-verification.php:431
+msgid "Verification code has been resent. Please check your email."
+msgstr ""
+"Код верификации был повторно отправлен. Пожалуйста, проверьте вашу почту."
+
+#: bws-google-2-step-verification.php:469
 msgid ""
 "Protect your personal account by enabling 2-step verification option on your "
 "profile page."
@@ -105,75 +110,88 @@ msgstr ""
 "Включите двухэтапную верификацию на странице профиля для лучшей защиты "
 "Вашего аккаунта"
 
-#: bws-google-2-step-verification.php:465
+#: bws-google-2-step-verification.php:471
 msgid "Go to my profile"
 msgstr "Перейти в мой профиль"
 
-#: bws-google-2-step-verification.php:468
+#: bws-google-2-step-verification.php:474
 #: includes/class-gglstpvrfctn-settings.php:114
 msgid "Close notice"
 msgstr "Закрыть уведомление"
 
-#: bws-google-2-step-verification.php:875
+#: bws-google-2-step-verification.php:881
 msgid "You have no backup codes."
 msgstr "У Вас нет резервных кодов."
 
-#: bws-google-2-step-verification.php:878
+#: bws-google-2-step-verification.php:884
 #, php-format
 msgid "Backup codes for %s"
 msgstr "Резервные коды для %s"
 
-#: bws-google-2-step-verification.php:893
+#: bws-google-2-step-verification.php:899
 msgid "Visit the following page to generate new codes"
 msgstr "Для получения новых кодов посетите следующую страницу"
 
-#: bws-google-2-step-verification.php:1130
+#: bws-google-2-step-verification.php:1136
 msgid "Google 2-Step Verification code"
 msgstr "Код Google 2-Step Verification"
 
-#: bws-google-2-step-verification.php:1135
+#: bws-google-2-step-verification.php:1141
 msgid "Insert the code if you enabled 2-Step verification for your profile"
 msgstr ""
 "Введите код если Вы включали двухэтапную верификацию для своего профиля"
 
-#: bws-google-2-step-verification.php:1137
+#: bws-google-2-step-verification.php:1143
 msgid "Send me a code via email"
 msgstr "Получить код по email"
 
-#: bws-google-2-step-verification.php:1185
-#: bws-google-2-step-verification.php:1371
+#: bws-google-2-step-verification.php:1146
+msgid "The code has been already sent."
+msgstr "Код уже был отправлен."
+
+#: bws-google-2-step-verification.php:1147
+msgid "Resend Code"
+msgstr "Повторить отправку кода "
+
+#: bws-google-2-step-verification.php:1148
+#: bws-google-2-step-verification.php:1266
+msgid "Cancel"
+msgstr "Отмена"
+
+#: bws-google-2-step-verification.php:1196
+#: bws-google-2-step-verification.php:1382
 msgid "Verification"
 msgstr "Верификация"
 
-#: bws-google-2-step-verification.php:1191
+#: bws-google-2-step-verification.php:1202
 msgid "Enable to activate Google 2-Step Verification."
 msgstr "Включите, чтобы активировать Google 2-Step Verification."
 
-#: bws-google-2-step-verification.php:1200
+#: bws-google-2-step-verification.php:1211
 #: includes/class-gglstpvrfctn-settings.php:131
 msgid "Verification Methods"
 msgstr "Методы верификации"
 
-#: bws-google-2-step-verification.php:1206
+#: bws-google-2-step-verification.php:1217
 #: includes/class-gglstpvrfctn-settings.php:135
 msgid "Email"
 msgstr "Email"
 
-#: bws-google-2-step-verification.php:1212
+#: bws-google-2-step-verification.php:1223
 #: includes/class-gglstpvrfctn-settings.php:139
 msgid "Authenticator app"
 msgstr "Приложение Authenticator"
 
-#: bws-google-2-step-verification.php:1218
+#: bws-google-2-step-verification.php:1229
 #: includes/class-gglstpvrfctn-settings.php:143
 msgid "Backup codes"
 msgstr "Резервные коды"
 
-#: bws-google-2-step-verification.php:1226
+#: bws-google-2-step-verification.php:1237
 msgid "Failed Attempt Notifications"
 msgstr "Уведомления о неудачных попытках"
 
-#: bws-google-2-step-verification.php:1230
+#: bws-google-2-step-verification.php:1241
 msgid ""
 "Enable if you want to receive email notifications about each failed "
 "verification attempt."
@@ -181,31 +199,27 @@ msgstr ""
 "Включите, если Вы хотите получать email уведомления о неудачных попытках "
 "верификации."
 
-#: bws-google-2-step-verification.php:1241
+#: bws-google-2-step-verification.php:1252
 msgid "Authenticator App"
 msgstr "Приложение Authenticator"
 
-#: bws-google-2-step-verification.php:1246
+#: bws-google-2-step-verification.php:1257
 msgid "Not verified"
 msgstr "Не проверен"
 
-#: bws-google-2-step-verification.php:1249
+#: bws-google-2-step-verification.php:1260
 msgid "Verified"
 msgstr "Проверен"
 
-#: bws-google-2-step-verification.php:1252
+#: bws-google-2-step-verification.php:1263
 msgid "Edit"
 msgstr "Изменить"
 
-#: bws-google-2-step-verification.php:1255
-msgid "Cancel"
-msgstr "Отмена"
-
-#: bws-google-2-step-verification.php:1259
+#: bws-google-2-step-verification.php:1270
 msgid "Done! Your Authenticator app is set."
 msgstr "Готово! Ваше приложение Authenticator настроено."
 
-#: bws-google-2-step-verification.php:1265
+#: bws-google-2-step-verification.php:1276
 #, php-format
 msgid ""
 "Download and install Authenticator application on your %s, %s or %s device."
@@ -213,20 +227,20 @@ msgstr ""
 "Скачайте и установите приложение Authenticator на Ваше устройство %s, %s или "
 "%s."
 
-#: bws-google-2-step-verification.php:1273
+#: bws-google-2-step-verification.php:1284
 msgid "Scan the following QR code using Authenticator application."
 msgstr "Просканируйте следующий QR код при помощи приложения Authenticator."
 
-#: bws-google-2-step-verification.php:1275
+#: bws-google-2-step-verification.php:1286
 msgid "Can't scan the QR code?"
 msgstr "Не удаётся просканировать QR код?"
 
-#: bws-google-2-step-verification.php:1278
+#: bws-google-2-step-verification.php:1289
 msgid "Enter the secret key below into your Authenticator application manually"
 msgstr ""
 "Введите следующий секретный ключ в Ваше приложение Authenticator вручную"
 
-#: bws-google-2-step-verification.php:1284
+#: bws-google-2-step-verification.php:1295
 msgid ""
 "Once you have entered the secret key, enter and verify the 6-digit "
 "verification code generated by the Authenticator app"
@@ -234,7 +248,7 @@ msgstr ""
 "После того как Вы ввели секретный ключ, введите и проверьте шестизначный "
 "код, сгенерированный приложением Authenticator"
 
-#: bws-google-2-step-verification.php:1286
+#: bws-google-2-step-verification.php:1297
 msgid ""
 "Once you have scanned the QR code (or entered the secret key manually), "
 "enter and verify the 6-digit verification code generated by the "
@@ -244,32 +258,32 @@ msgstr ""
 "введите и проверьте шестизначный код, сгенерированный приложением "
 "Authenticator"
 
-#: bws-google-2-step-verification.php:1289
+#: bws-google-2-step-verification.php:1300
 msgid "Verify"
 msgstr "Проверить"
 
-#: bws-google-2-step-verification.php:1292
+#: bws-google-2-step-verification.php:1303
 msgid "Wrong code, try again."
 msgstr "Неверный код, попробуйте ещё раз."
 
-#: bws-google-2-step-verification.php:1307
+#: bws-google-2-step-verification.php:1318
 msgid "Backup Codes"
 msgstr "Резервные коды"
 
-#: bws-google-2-step-verification.php:1312
+#: bws-google-2-step-verification.php:1323
 #, php-format
 msgid "Codes left: %s"
 msgstr "Осталось кодов: %s"
 
-#: bws-google-2-step-verification.php:1321
+#: bws-google-2-step-verification.php:1332
 msgid "Download as TXT"
 msgstr "Загрузить как TXT"
 
-#: bws-google-2-step-verification.php:1324
+#: bws-google-2-step-verification.php:1335
 msgid "Generate New Codes"
 msgstr "Получить новые коды"
 
-#: bws-google-2-step-verification.php:1328
+#: bws-google-2-step-verification.php:1339
 msgid ""
 "Each Backup code can be used only once. You should keep it somewhere safe "
 "but accessible."
@@ -277,38 +291,38 @@ msgstr ""
 "Вы можете использовать каждый резервный код только один раз. Храните Ваши "
 "коды в безопасном, но доступном месте."
 
-#: bws-google-2-step-verification.php:1330
-#: bws-google-2-step-verification.php:1331
+#: bws-google-2-step-verification.php:1341
+#: bws-google-2-step-verification.php:1342
 msgid "Show Codes"
 msgstr "Показать коды"
 
-#: bws-google-2-step-verification.php:1330
+#: bws-google-2-step-verification.php:1341
 msgid "Hide Codes"
 msgstr "Скрыть коды"
 
-#: bws-google-2-step-verification.php:1377
+#: bws-google-2-step-verification.php:1388
 msgid "Enable if you want the user to use Google 2-Step Verification."
 msgstr "Отметьте, если Вы хотите включить верификацию для пользователя."
 
-#: bws-google-2-step-verification.php:1497
+#: bws-google-2-step-verification.php:1508
 msgid "You should enable and configure at least one verification method."
 msgstr "Необходимо включить и настроить хотя бы один метод верификации."
 
-#: bws-google-2-step-verification.php:1498
-#: bws-google-2-step-verification.php:1511
+#: bws-google-2-step-verification.php:1509
+#: bws-google-2-step-verification.php:1522
 msgid "Google 2-Step Verification has been disabled."
 msgstr "Двухэтапная верификация была отключена."
 
-#: bws-google-2-step-verification.php:1510
+#: bws-google-2-step-verification.php:1521
 msgid "At least one enabled verification method should be configured properly."
 msgstr ""
 "Необходимо корректно настроить хотя бы один включённый метод верификации."
 
-#: bws-google-2-step-verification.php:1540
+#: bws-google-2-step-verification.php:1551
 msgid "FAQ"
 msgstr "FAQ"
 
-#: bws-google-2-step-verification.php:1541
+#: bws-google-2-step-verification.php:1552
 msgid "Support"
 msgstr "Поддержка"
 

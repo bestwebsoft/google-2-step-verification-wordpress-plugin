@@ -1,7 +1,11 @@
 (function( $ ) {
 	$( document ).ready(function() {
-		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email' ).hide();
+		var clicked_time = 0;
+		var clicks_number = 0;
+		var expiration = 0;
+		var minute_in_seconds = 60000;
 
+		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, .gglstpvrfctn-resending' ).hide();
 		var form = $( '.gglstpvrfctn-login-wrap' ).closest( 'form' );
 
 		function getUserInfo( user_login ) {
@@ -11,9 +15,9 @@
 				type	: 'POST',
 				url		: gglstpvrfctnLoginVars.ajaxurl,
 				data	: {
-					action						: 'gglstpvrfctn_check_verification_options',
-					gglstpvrfctn_login			: user_login,
-					gglstpvrfctn_ajax_nonce		: gglstpvrfctnLoginVars.ajax_nonce
+					action					: 'gglstpvrfctn_check_verification_options',
+					gglstpvrfctn_login		: user_login,
+					gglstpvrfctn_ajax_nonce	: gglstpvrfctnLoginVars.ajax_nonce
 				},
 				success: function( data ) {
 					var user = {
@@ -34,6 +38,36 @@
 					} else {
 						form.removeClass( 'processing' ).trigger( 'submit' );
 					}
+					expiration = user.expiration_time * minute_in_seconds;
+				}
+			} )
+		}
+
+		/* Sending email code request via AJAX and printing message if code is sent */
+		function ajaxRequest ( ) {
+			$.ajax( {
+				type	: 'POST',
+				url		: gglstpvrfctnLoginVars.ajaxurl,
+				data	: {
+					action:						'gglstpvrfctn_request_email_code',
+					gglstpvrfctn_login:			user_login,
+					gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce
+				},
+				success: function( data ) {
+					try {
+						data = JSON.parse( data );
+						clicks_number++;
+						if ( 1 == data['result'] ) {
+							if ( $( 'p.gglstpvrfctn-message' ).length ) {
+								$( 'p.gglstpvrfctn-message' ).html( gglstpvrfctnLoginVars.resending_message );
+							} else {
+								form.before( '<p class="message gglstpvrfctn-message">' + data['message'] + '</p>' );
+							}
+						}
+					} catch ( err ) {
+						/* server response is invalid. */
+						console.log( 'EMAIL REQUEST: Server response is invalid' );
+					}
 				}
 			} );
 		}
@@ -46,7 +80,6 @@
 			form.one( 'submit', function( e ) {
 				$( this ).addClass( 'processing' );
 				e.preventDefault();
-
 				if ( typeof login_field != 'undefined' ) {
 					user_login = login_field.val();
 				} else {
@@ -59,36 +92,35 @@
 			/* Sending email code request via AJAX and printing message if code is sent */
 			$( '.gglstpvrfctn-request-email' ).on( 'click', function( e ) {
 				e.preventDefault();
-				if ( typeof login_field != 'undefined' ) {
-					user_login = login_field.val();
-				} else {
-					user_login = '';
+				clicks_number++;
+				var curr_date = new Date();
+				if ( clicked_time + expiration < curr_date.getTime() && expiration != 0 ) {
+					clicks_number = 0;
+					clicked_time = 0;
 				}
-				$.ajax( {
-					type    : 'POST',
-					url     : gglstpvrfctnLoginVars.ajaxurl,
-					data    : {
-						action:						'gglstpvrfctn_request_email_code',
-						gglstpvrfctn_login:			user_login,
-						gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce
-					},
-					success: function( data ) {
-						try {
-							data = JSON.parse( data );
-							if ( 1 == data['result'] ) {
-								if ( $( 'p.gglstpvrfctn-message' ).length ) {
-									$( 'p.gglstpvrfctn-message' ).html( data['message'] );
-								} else {
-									form.before( '<p class="message gglstpvrfctn-message">' + data['message'] + '</p>' );
-								}
-							}
-						} catch ( err ) {
-							/* server response is invalid. */
-							console.log( 'EMAIL REQUEST: Server response is invalid' );
-						}
+				0 == clicked_time ? clicked_time = curr_date.getTime() : clicked_time = clicked_time;
+				if ( ( clicks_number > 1 && clicked_time + expiration > curr_date.getTime() ) || ( clicks_number > 1 && expiration == 0 ) ) {
+					$( '.gglstpvrfctn-resending' ).show();
+				} else {
+					if ( typeof login_field != 'undefined' ) {
+						user_login = login_field.val();
+					} else {
+						user_login = '';
 					}
-				} );
+					ajaxRequest();
+				}
+			} );
+
+			$( '#gglstpvrfctn-resend' ).on( 'click', function( e ) {
+				e.preventDefault();
+				ajaxRequest();
+				$( '.gglstpvrfctn-resending' ).hide();
 			} );
 		}
+
+		$( '#gglstpvrfctn-cancel' ).on( 'click', function( e ) {
+			e.preventDefault();
+			$( '.gglstpvrfctn-resending' ).hide();
+		});
 	});
 })( jQuery );

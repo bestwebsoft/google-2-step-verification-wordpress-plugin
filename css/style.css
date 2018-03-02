@@ -25,11 +25,12 @@
 	outline: none;
 	cursor: pointer;
 }
-
+.gglstpvrfctn-resending {
+	margin-bottom: 10px;
+}
 .gglstpvrfctn-clear {
 	clear: both;
 }
-
 p.gglstpvrfctn-message {
 	color: #0073aa;
 }

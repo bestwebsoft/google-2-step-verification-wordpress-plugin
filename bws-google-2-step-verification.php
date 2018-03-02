@@ -6,7 +6,7 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.1
+Version: 1.0.2
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */
@@ -250,14 +250,21 @@ if ( ! function_exists( 'gglstpvrfctn_admin_head' ) ) {
  */
 if ( ! function_exists( 'gglstpvrfctn_authenticate' ) ) {
 	function gglstpvrfctn_authenticate( $user ) {
-		global $gglstpvrfctn_enabled_methods;
-
+		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_options;
 		if ( ! ( $user instanceof WP_User ) ) {
 			return $user;
 		}
+		if ( empty( $gglstpvrfctn_options ) ) {
+			$gglstpvrfctn_options = gglstpvrfctn_get_options_default();
+		}
+
+		$email_init_time = get_user_meta( $user->ID, 'gglstpvrfctn_email_init_time', true );
+		$email_expiration_time = intval( $email_init_time ) + intval( $gglstpvrfctn_options['email_expiration'] ) * 60;
+		$current_time = time();
 
 		/* User has enabled second step verification */
-		if ( isset( $_REQUEST['gglstpvrfctn-request-email'] ) ) {
+		if ( isset( $_REQUEST['gglstpvrfctn-request-email'] )
+		|| ( isset( $_REQUEST['gglstpvrfctn-resend'] ) && $current_time > $email_init_time && $current_time <= $email_expiration_time ) ) {
 			return gglstpvrfctn_request_email( $user->ID );
 		}
 
@@ -423,7 +430,8 @@ if ( ! function_exists( 'gglstpvrfctn_login_enqueue_scripts' ) ) {
 		$login_script_vars = array(
 			'ajaxurl'				=> admin_url( 'admin-ajax.php' ),
 			'ajax_nonce'			=> wp_create_nonce( 'gglstpvrfctn_login_script' ),
-			'custom_login_fields'	=> apply_filters( 'gglstpvrfctn_custom_login_fields', '' ) /* Custom Login fields, which value also could be used to get username/useremail */
+			'custom_login_fields'	=> apply_filters( 'gglstpvrfctn_custom_login_fields', '' ), /* Custom Login fields, which value also could be used to get username/useremail */
+			'resending_message'		=> __( 'Verification code has been resent. Please check your email.', 'bws-google-2-step-verification' )
 		);
 		wp_localize_script( 'gglstpvrfctn_login_script', 'gglstpvrfctnLoginVars', $login_script_vars );
 	}
@@ -1090,9 +1098,12 @@ if ( ! function_exists( 'gglstpvrfctn_request_email_code' ) ) {
 if ( ! function_exists( 'gglstpvrfctn_check_verification_options' ) ) {
 	function gglstpvrfctn_check_verification_options() {
 		check_ajax_referer( 'gglstpvrfctn_login_script', 'gglstpvrfctn_ajax_nonce' );
-		global $gglstpvrfctn_enabled_methods;
+		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_options;
+		if ( empty( $gglstpvrfctn_options ) ) {
+			$gglstpvrfctn_options = gglstpvrfctn_get_options_default();
+		}
 
-		$result = array( 'enabled' => 0, 'methods' => array() );
+		$result = array( 'enabled' => 0, 'methods' => array(), 'expiration_time' => $gglstpvrfctn_options['email_expiration'] );
 
 		if ( ! empty( $_POST['gglstpvrfctn_login'] ) ) {
 			$login = trim( wp_unslash( $_POST['gglstpvrfctn_login'] ) );
@@ -1136,6 +1147,11 @@ if ( ! function_exists( 'gglstpvrfctn_login_form' ) ) {
 			<button class="gglstpvrfctn-request-email gglstpvrfctn-link-button hidden" name="gglstpvrfctn-request-email">
 				<?php _e( 'Send me a code via email', 'bws-google-2-step-verification' ); ?>
 			</button>
+			<div class="gglstpvrfctn-resending">
+				<p><?php _e( 'The code has been already sent.', 'bws-google-2-step-verification' ); ?></p>
+				<button class="button" id="gglstpvrfctn-resend" name="gglstpvrfctn-resend"><?php _e( 'Resend Code', 'bws-google-2-step-verification' ); ?></button>
+				<button class="button" id="gglstpvrfctn-cancel"><?php _e( 'Cancel', 'bws-google-2-step-verification' ); ?></button>
+			</div>
 			<div class="clear gglstpvrfctn-clear"></div>
 		</div><!-- .gglstpvrfctn-login-wrap -->
 	<?php }

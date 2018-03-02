@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 3.9
-Tested up to: 4.9.1
-Stable tag: 1.0.1
+Tested up to: 4.9.4
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.2 - 02.03.2018 =
+* Update : The functionality of the code re-sending was improved.
+
 = V1.0.1 - 05.01.2018 =
 * Update : All functionality for WordPress 4.9.1 was updated.
 
@@ -132,6 +135,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.2 =
+* Functionality improved.
 
 = V1.0.1 =
 * The compatibility with new WordPress version updated.
