@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 3.9
-Tested up to: 4.9.4
-Stable tag: 1.0.2
+Tested up to: 4.9.8
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ Protect your WordPress website with 2-Step Verification now!
 	* Authenticator app code
 	* Email code
 	* Backup codes
+	* SMS code [NEW]
 * Select the user roles that can use Google 2-Step Verification
 	* All user roles
 	* Administrator
@@ -125,6 +126,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.3 - 24.10.2018 =
+* NEW : Verification option via SMS code has been added.
+
 = V1.0.2 - 02.03.2018 =
 * Update : The functionality of the code re-sending was improved.
 
@@ -135,6 +139,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.3 =
+* New features added.
 
 = V1.0.2 =
 * Functionality improved.

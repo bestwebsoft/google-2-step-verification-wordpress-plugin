@@ -5,7 +5,8 @@
 		var expiration = 0;
 		var minute_in_seconds = 60000;
 
-		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, .gglstpvrfctn-resending' ).hide();
+		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, .gglstpvrfctn-request-sms, .gglstpvrfctn-resending' ).hide();
+		
 		var form = $( '.gglstpvrfctn-login-wrap' ).closest( 'form' );
 
 		function getUserInfo( user_login ) {
@@ -32,6 +33,9 @@
 						$( '#login_error, .message' ).hide();
 						if ( -1 != $.inArray( 'email', user.methods ) ) {
 							$( '.gglstpvrfctn-request-email' ).show();
+						}
+						if ( -1 != $.inArray( 'sms', user.methods ) ) {
+							$( '.gglstpvrfctn-request-sms' ).show();
 						}
 						$( '.gglstpvrfctn-login-wrap' ).show();
 						$( '#gglstpvrfctn-code' ).trigger( 'focus' );
@@ -67,6 +71,52 @@
 					} catch ( err ) {
 						/* server response is invalid. */
 						console.log( 'EMAIL REQUEST: Server response is invalid' );
+					}
+				}
+			} );
+		}
+
+		/* Sending sms code request via AJAX and printing message if code is sent */
+		function ajaxRequestSms ( ) {
+			$.ajax( {
+				type	: 'POST',
+				url		: gglstpvrfctnLoginVars.ajaxurl,
+				data	: {
+					action:						'gglstpvrfctn_request_sms_code',
+					gglstpvrfctn_login:			user_login,
+					gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce
+				},
+				success: function( data ) {
+					try {
+						data = JSON.parse( data );
+						var config = {
+						    apiKey: data['apikey']
+						};
+						firebase.initializeApp( config );
+						window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( 'gglstpvrfctn-recaptcha-container' );
+						var phoneNumber = data['phone'];
+						$( '#gglstpvrfctn-code' ).prop( 'disabled' , true);
+						$( '.gglstpvrfctn-request-sms' ).hide();
+						firebase.auth().signInWithPhoneNumber( phoneNumber, recaptchaVerifier )
+						    .then( function ( confirmationResult ) {
+						     	// SMS sent. Prompt user to type the code from the message, then sign the
+						      	// user in with confirmationResult.confirm(code).
+								if ( $( '.gglstpvrfctn-message' ).length ) {
+									$( '.gglstpvrfctn-message' ).text( data['message'] );
+								} else {
+									form.before( '<p class="message gglstpvrfctn-message">' + data['message'] + '</p>' );
+								}
+						      	window.confirmationResult = confirmationResult;
+						      	$( '#gglstpvrfctn-code' ).prop( 'disabled', false );
+						      	$( '#gglstpvrfctn-recaptcha-container' ).hide();
+						    } ).catch( function ( error ) {
+						      	// Error; SMS not sent
+						       	console.error( 'Error during signInWithPhoneNumber', error );
+						       	window.alert( 'Error during signInWithPhoneNumber:\n\n' + error.code + '\n\n' + error.message );
+						    } );
+					} catch ( err ) {
+						/* server response is invalid. */
+						console.log( 'SMS REQUEST: Server response is invalid', err );
 					}
 				}
 			} );
@@ -115,6 +165,13 @@
 				e.preventDefault();
 				ajaxRequest();
 				$( '.gglstpvrfctn-resending' ).hide();
+			} );
+
+			/* Sending sms code request via AJAX and printing message if code is sent */
+			$( '.gglstpvrfctn-request-sms' ).on( 'click', function( e ) {
+				e.preventDefault();
+				$( '.gglstpvrfctn-request-email' ).hide();
+				ajaxRequestSms();
 			} );
 		}
 

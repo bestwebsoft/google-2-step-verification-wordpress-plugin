@@ -188,12 +188,45 @@
 			wrapper.slideToggle( '400' );
 			e.stopPropagation();
 		} );
+		/* Returns true if the phone number is valid. */
+		function isPhoneNumberValid() {
+		    var pattern = /^\+[0-9\s\-\(\)]{8,15}$/;
+		    var phoneNumber = $('.gglstpvrfctn-userphone').val();
+		    return phoneNumber.search(pattern) !== -1;
+		  }
 
 		$( 'form' ).on( 'submit', function( e ) {
 			if ( $( document.activeElement ).is( '#gglstpvrfctn-code-test' ) ) {
 				e.preventDefault();
 				$( '#gglstpvrfctn-check-code' ).click();
 			}
+			if ( ! isPhoneNumberValid() && $('[name="gglstpvrfctn_sms"]').prop('checked') ) {
+				e.preventDefault();
+				$('.gglstpvrfctn-userphone').focus();
+				$('.gglstpvrfctn-userphone').removeClass("gglstpvrfctn-valid").addClass("gglstpvrfctn-invalid");
+				$( '.gglstpvrfctn-error' ).show();
+			} 
 		} );
+
+		/* Hide/Show Phone input for enabled/disabled SMS authentication methods */
+		$( '[name="gglstpvrfctn_sms"]' ).on( 'change', function() {
+			if ( $( this ).is( ':checked' ) ) {
+				$( '#gglstpvrfctn-phone-label' ).show();
+			} else {
+				$( '#gglstpvrfctn-phone-label' ).hide();
+			}
+		} ).trigger( 'change' );
+
+		$( '.gglstpvrfctn-error' ).hide();
+		$('.gglstpvrfctn-userphone').on('input', function() {
+			var input=$(this);
+			if(isPhoneNumberValid()){
+				input.removeClass("gglstpvrfctn-invalid").addClass("gglstpvrfctn-valid");
+				$( '.gglstpvrfctn-error' ).hide();
+			} else {
+				input.removeClass("gglstpvrfctn-valid").addClass("gglstpvrfctn-invalid");
+				$( '.gglstpvrfctn-error' ).show();
+			}
+		});
 	} );
 } )( jQuery );

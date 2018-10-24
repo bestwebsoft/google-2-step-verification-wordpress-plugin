@@ -5,7 +5,8 @@
 	font-size: 12px;
 	color: #999;
 }
-.gglstpvrfctn-request-email {
+.gglstpvrfctn-request-email,
+.gglstpvrfctn-request-sms {
 	margin-bottom: 10px;
 }
 

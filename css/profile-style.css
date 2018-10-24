@@ -109,9 +109,17 @@
 	padding: 1px 0;
 	margin-top: 10px;
 }
-
 #gglstpvrfctn-qr-link,
 #gglstpvrfctn-test-success-message,
 #gglstpvrfctn-test-fail-message {
 	display: none;
+}
+input.gglstpvrfctn-invalid {
+	border: 2px solid #dc3232;
+}
+input.gglstpvrfctn-valid {
+	border: 2px solid #5b9dd9;
+}
+.gglstpvrfctn-error {
+	color: #dc3232; 
 }

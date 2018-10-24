@@ -61,10 +61,14 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 			$submit_methods = array(
 				'email',
 				'authenticator',
-				'backup_code'
+				'backup_code',
+				'sms'
 			);
 			$submit_checkboxes = array(
 				'notification_fail'
+			);
+			$submit_firebase_set = array(
+				'apikey'
 			);
 
 			foreach ( $submit_methods as $method ) {
@@ -73,6 +77,10 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 
 			foreach ( $submit_checkboxes as $option ) {
 				$this->options[ $option ] = isset( $_POST["gglstpvrfctn_{$option}"] ) ? 1 : 0;
+			}
+
+			foreach ( $submit_firebase_set as $firebase_set ) {
+				$this->options['firebase'][ $firebase_set ] = $_POST["gglstpvrfctn_firebase_{$firebase_set}"];
 			}
 
 			$this->options['email_expiration'] = absint( $_POST["gglstpvrfctn_email_expiration"] );
@@ -141,7 +149,43 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 							<label>
 								<input type="checkbox" value="1" name="gglstpvrfctn_method_backup_code" <?php checked( 1, $this->options['methods']['backup_code'] ); ?>/>&nbsp;
 								<?php _e( 'Backup codes', 'bws-google-2-step-verification' ); ?>
+							</label><br>
+							<label>
+								<input type="checkbox" value="1" name="gglstpvrfctn_method_sms" <?php checked( 1, $this->options['methods']['sms'] ); ?>/>&nbsp;
+								<?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?>
 							</label>
+						</fieldset>
+					</td>
+				</tr>
+				<tr  id="gglstpvrfctn_firebase_settings">
+					<th scope="row"><?php _e( 'Firebase Settings', 'bws-google-2-step-verification' ); ?></th>
+					<td>
+						<fieldset>
+							<span class="bws_info"><?php _e( 'Register your website in firebase console to get required API key and enter it below.', 'bws-google-2-step-verification' ); ?></span>&nbsp;<a href="https://console.firebase.google.com/" target="_blank"><?php _e( 'Go to Firebase', 'bws-google-2-step-verification' ); ?></a><br><br>
+                            <span class="bws_info"><?php _e( 'If your need help setting up the Firebase, please read our', 'bws-google-2-step-verification' ); ?>  </span>&nbsp;<a href="https://docs.google.com/document/d/1NZxoCsROJ6dVNJktSCb4mIfx4NjFLypLFsC5xG_NotU/" target="_blank"><?php _e( 'Step-by-step Instruction', 'bws-google-2-step-verification' ); ?></a><br><br>
+                            <label>
+								<input type="text" name="gglstpvrfctn_firebase_apikey" id="gglstpvrfctn_firebase_apikey" value="<?php echo($this->options['firebase']['apikey']) ?>" />&nbsp;<?php _e( 'API Key', 'bws-google-2-step-verification' ); ?>
+							</label><br><br>
+							<input type="button" class="button button-primary hide-if-no-js" id="gglstpvrfctn_firebase_test_button" value="<?php _e( 'Test Firebase SMS Auth', 'bws-google-2-step-verification' ); ?>" />
+							<div class="hide-if-no-js" id="gglstpvrfctn_firebase_test">
+								<label id="gglstpvrfctn-phone-label">
+									<input type="tel" class="gglstpvrfctn-test-userphone" name="gglstpvrfctn_test_phone" placeholder="+1234567890" value="">
+									<span><?php _e( 'Test phone number', 'bws-google-2-step-verification' ); ?></span><br>
+									<span class="gglstpvrfctn-error"><?php _e( 'A valid phone number is required', 'bws-google-2-step-verification' ); ?></span>
+								</label><br>
+								<input type="button" class="button button-primary" id="gglstpvrfctn_firebase_test_sms" value="<?php _e( 'Send test SMS', 'bws-google-2-step-verification' ); ?>" />
+								<div id="gglstpvrfctn-test-recaptcha-container" style="transform: scale(0.9);-webkit-transform: scale(0.9);transform-origin :0 0;-webkit-transform-origin: 0 0;"></div>
+								<div id="gglstpvrfctn-test-code-label">
+									<label >
+									<input type="text" id="gglstpvrfctn-test-code" value="" size="8" />&nbsp;<span class="bws_info">
+									<?php _e( 'Enter the code from sms and click \'Test code\' button ', 'bws-google-2-step-verification' ); ?>.</span>
+									<br>
+									</label><br>
+									<input type="button" class="button button-primary" id="gglstpvrfctn_firebase_test_code_button" value="<?php _e( 'Test code', 'bws-google-2-step-verification' ); ?>" />
+								</div>
+								<div class="gglstpvrfctn-firebase-test-result">
+								</div>
+							</div>
 						</fieldset>
 					</td>
 				</tr>

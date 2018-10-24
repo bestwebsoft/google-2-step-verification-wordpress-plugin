@@ -11,6 +11,7 @@
 <li>Authenticator app code</li>
 <li>Email code</li>
 <li>Backup codes</li>
+<li>SMS code [NEW]</li>
 </ul>
 </li>
 <li>Select the user roles that can use Google 2-Step Verification
