@@ -121,5 +121,40 @@ input.gglstpvrfctn-valid {
 	border: 2px solid #5b9dd9;
 }
 .gglstpvrfctn-error {
-	color: #dc3232; 
+	color: #dc3232;
+}
+
+/* secret question block */
+#gglstpvrfctn-question-data input {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+#gglstpvrfctn-cancel-question-data {
+	padding-top: 5px;
+	padding-bottom: 15px;
+}
+#gglstpvrfctn-question-notice-save {
+	display: inline-block;
+	vertical-align: sub;
+	padding-left: 10px;
+}
+
+/* secret question message */
+.gglstpvrfctn-question-data-not-saved::before,
+.gglstpvrfctn-question-data-saved::before {
+	font-family: 'dashicons';
+	font-size: 20px;
+	vertical-align: middle;
+}
+.gglstpvrfctn-question-data-not-saved::before {
+	content: '\f158';
+	color: #dc1414;
+}
+.gglstpvrfctn-question-data-saved:before {
+	content: '\f147';
+	color: #46b450;
+}
+.gglstpvrfctn-toggle-password {
+	line-height: 30px;
 }

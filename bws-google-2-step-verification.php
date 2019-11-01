@@ -6,12 +6,12 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.4
+Version: 1.0.5
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */
 
-/*  © Copyright 2018  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2019  BestWebSoft  ( https://support.bestwebsoft.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
@@ -117,6 +117,13 @@ if ( ! function_exists( 'gglstpvrfctn_init' ) ) {
             add_action( 'bp_login_widget_form', 'gglstpvrfctn_bp_form' );
             add_action( 'woocommerce_login_form', 'gglstpvrfctn_woocommerce_login_form' );
 
+			/* Default reset password */
+			add_action( 'lostpassword_form', 'gglstpvrfctn_reset_password_form' );
+			add_filter( 'allow_password_reset', 'gglstpvrfctn_allow_password_reset' ); // also work in reset_pass woocommerce
+
+			/* Default Register form */
+			add_action( 'register_form', 'gglstpvrfctn_login_form', 99 );
+			add_action( 'registration_errors', 'gglstpvrfctn_register_check', 10, 1 );
 		}
 	}
 }
@@ -196,7 +203,8 @@ if ( ! function_exists( 'gglstpvrfctn_get_options_default' ) ) {
 				'email'							=> 1,
 				'authenticator'					=> 0,
 				'backup_code'					=> 0,
-				'sms'							=> 0
+				'sms'							=> 0,
+                'question'						=> 0
 			),
 			'authenticator_time_window'		=> 0, /* Time window for authenticator app in minutes. 0 - use default(30 sec) */
 			'email_expiration'				=> 3, /* Email code expiration time in minutes */
@@ -260,8 +268,8 @@ if ( ! function_exists( 'gglstpvrfctn_authenticate' ) ) {
 		if ( ! ( $user instanceof WP_User ) ) {
 			return $user;
 		}
-        //Check if user is logged via buddypress widget or woocommerce log page
-        if ( '1' == $_POST['gglstpvrfctn_bp'] || '1' == $_POST['gglstpvrfctn_wc']) {
+        // validation only for standard form
+        if ( isset( $_POST['gglstpvrfctn_bp'] ) || isset( $_POST['gglstpvrfctn_wc'] ) ) {
             return $user;
         }
 
@@ -347,7 +355,7 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 			if ( ! (
 				empty( $user_options[ $method ] ) ||
 				( 'authenticator' == $method && ! get_user_meta( $user_id, 'gglstpvrfctn_user_secret', true ) ) ||
-				( 'backup_code' == $method && empty( $backup_codes ) ) 
+				( 'backup_code' == $method && empty( $backup_codes ) )
 			) ) {
 				if ( 'sms' == $method ) {
 					$check = true;
@@ -827,6 +835,7 @@ if ( ! function_exists( 'gglstpvrfctn_test_secret' ) ) {
 
 			$user_code = trim( stripslashes( esc_html( $_REQUEST['gglstpvrfctn_test_code'] ) ) );
 			$test_secret = trim( stripslashes( esc_html( $_REQUEST['gglstpvrfctn_secret'] ) ) );
+
 			if ( gglstpvrfctn_check_authenticator_code( 0, $user_code, $test_secret ) ) {
 				$encrypted_secret = gglstpvrfctn_encode_string( $test_secret );
 				update_user_meta( $current_user->ID, 'gglstpvrfctn_user_secret', $encrypted_secret );
@@ -1056,7 +1065,7 @@ if ( ! function_exists( 'gglstpvrfctn_send_sms' ) ) {
 		if ( ! $user instanceof WP_User ) {
 			return false;
 		}
-		if ( 'sms_code' == $origin ) { 
+		if ( 'sms_code' == $origin ) {
 			 return true;
 		}
 		return false;
@@ -1136,7 +1145,9 @@ if ( ! function_exists( 'gglstpvrfctn_request_email_code' ) ) {
  */
 if ( ! function_exists( 'gglstpvrfctn_request_sms_code' ) ) {
 	function gglstpvrfctn_request_sms_code() {
+
 		check_ajax_referer( 'gglstpvrfctn_login_script', 'gglstpvrfctn_ajax_nonce' );
+
 		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_options;
 		$result = array( 'result' => 0 );
 		if ( isset( $gglstpvrfctn_enabled_methods['sms'] ) && ! empty( $_POST['gglstpvrfctn_login'] ) ) {
@@ -1172,7 +1183,9 @@ if ( ! function_exists( 'gglstpvrfctn_request_sms_code' ) ) {
 if ( ! function_exists( 'gglstpvrfctn_check_verification_options' ) ) {
 	function gglstpvrfctn_check_verification_options() {
 		check_ajax_referer( 'gglstpvrfctn_login_script', 'gglstpvrfctn_ajax_nonce' );
+
 		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_options;
+
 		if ( empty( $gglstpvrfctn_options ) ) {
 			$gglstpvrfctn_options = gglstpvrfctn_get_options_default();
 		}
@@ -1224,7 +1237,7 @@ if ( ! function_exists( 'gglstpvrfctn_add_sms_script' ) ) {
 									data	: {
 										action:						'gglstpvrfctn_get_sms_response',
 										gglstpvrfctn_login:			user_login,
-										gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce  
+										gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce
 									},
 								} ).done( function() {
 										submitForm = true;
@@ -1253,33 +1266,78 @@ if ( ! function_exists( 'gglstpvrfctn_add_sms_script' ) ) {
 
 /* Add Two Step fields to the Login form */
 if ( ! function_exists( 'gglstpvrfctn_login_form' ) ) {
-	function gglstpvrfctn_login_form() { 
+	function gglstpvrfctn_login_form() {
+	    global $gglstpvrfctn_options;
+
+	    $is_question_method_active = $gglstpvrfctn_options['methods']['question'];
+
 		gglstpvrfctn_add_sms_script(); ?>
 		<input type="submit" name="login" value="Submit" style="display: none;"><!-- fake button to be clicked when Enter key is pressed to submit the form -->
 		<div class="gglstpvrfctn-login-wrap hidden">
 			<p>
 				<label for="gglstpvrfctn-code">
-					<span><?php _e( 'Google 2-Step Verification code', 'bws-google-2-step-verification' ); ?></span>
+					<span><?php _e( 'Google 2-Step Verification value', 'bws-google-2-step-verification' ); ?></span>
 					<br>
 					<input type="text" id="gglstpvrfctn-code" name="gglstpvrfctn-code">
 				</label>
 			</p>
 			<noscript><p class="gglstpvrfctn-description"><?php _e( 'Insert the code if you enabled 2-Step verification for your profile', 'bws-google-2-step-verification' ); ?></p></noscript>
-			<button class="gglstpvrfctn-request-email gglstpvrfctn-link-button hidden" name="gglstpvrfctn-request-email">
+
+            <?php if ( $is_question_method_active ) { ?>
+                <button id="gglstpvrfctn-see-question" class="gglstpvrfctn-link-button gglstpvrfctn-see-question">
+                    <?php _e( 'Show secret question', 'bws-google-2-step-verification' ); ?>
+                </button >
+                <div id="gglstpvrfctn-secret-question-container"></div>
+            <?php } ?>
+
+            <button class="gglstpvrfctn-request-email gglstpvrfctn-link-button hidden" name="gglstpvrfctn-request-email">
 				<?php _e( 'Send me a code via email', 'bws-google-2-step-verification' ); ?>
 			</button>
+
 			<button class="gglstpvrfctn-request-sms gglstpvrfctn-link-button hidden" name="gglstpvrfctn-request-sms">
 				<?php _e( 'Send me a code via sms', 'bws-google-2-step-verification' ); ?>
 			</button>
+
 			<div class="gglstpvrfctn-resending">
 				<p><?php _e( 'The code has been already sent.', 'bws-google-2-step-verification' ); ?></p>
 				<button class="button" id="gglstpvrfctn-resend" name="gglstpvrfctn-resend"><?php _e( 'Resend Code', 'bws-google-2-step-verification' ); ?></button>
 				<button class="button" id="gglstpvrfctn-cancel"><?php _e( 'Cancel', 'bws-google-2-step-verification' ); ?></button>
 			</div>
+
 			<div class="clear gglstpvrfctn-clear"></div>
 			<div id="gglstpvrfctn-recaptcha-container" style="transform: scale(0.9);-webkit-transform: scale(0.9);transform-origin :0 0;-webkit-transform-origin: 0 0;"></div>
 		</div><!-- .gglstpvrfctn-login-wrap -->
 	<?php }
+}
+
+/**
+ *  Check question code for login, register or other forms
+ *
+ *  @param	int	    $user_id
+ *  @param	string	$answer
+ *
+ * @return bool     response verification result
+ */
+if ( ! function_exists( 'gglstpvrfctn_check_question_code' ) ) {
+	function gglstpvrfctn_check_question_code( $user_id, $answer ) {
+
+		if ( empty ( $user_id ) || empty ( $answer ) ) {
+			return false;
+		}
+
+		$answer_prepare = sanitize_text_field( $answer );
+
+		/* get and unserialize data from user meta */
+		$user_meta_question_data = get_user_meta( $user_id, 'gglstpvrfctn_secret_question_data', true );
+		$question_data = unserialize( $user_meta_question_data );
+
+		/* check answer */
+        if ( (string) $answer_prepare === $question_data['answer'] ) {
+            return true;
+        }
+
+        return false;
+	}
 }
 
 /* Add Two Step fields to the custom Login form */
@@ -1330,6 +1388,10 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 			$backup_codes = array();
 		}
 
+		/* Check question codes */
+        $user_meta_question_data = get_user_meta( $current_user->ID, 'gglstpvrfctn_secret_question_data', true );
+        $question_data = unserialize( $user_meta_question_data );
+
 		$codes_count = count( $backup_codes );
 		$no_codes_style = ( empty( $codes_count ) ) ? "display: none;" : "";
 		$download_url = admin_url( 'admin.php?action=gglstpvrfctn_download_codes&gglstpvrfctn_nonce=' . wp_create_nonce( 'gglstpvrfctn_backup_codes_link' ) ); ?>
@@ -1373,6 +1435,12 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 									<span><?php _e( 'Backup codes', 'bws-google-2-step-verification' ); ?></span>
 								</label><br>
 							<?php }
+                            if ( isset( $gglstpvrfctn_enabled_methods['question'] ) ) { ?>
+                                <label>
+                                    <input type="checkbox" class="gglstpvrfctn-methods" name="gglstpvrfctn_question" data-method="question" value="1" <?php checked( ! empty( $user_options[ 'question' ] ) ); ?> >
+                                    <span><?php _e( 'Secret question', 'bws-google-2-step-verification' ); ?></span>
+                                </label><br>
+                            <?php }
 							if ( isset( $gglstpvrfctn_enabled_methods['sms'] ) ) { ?>
 								<label>
 									<input type="checkbox" class="gglstpvrfctn-methods" name="gglstpvrfctn_sms" data-method="sms" value="1" <?php checked( ! empty( $user_options[ 'sms' ] ) ); ?> >
@@ -1382,7 +1450,7 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 									<span><?php _e( 'Phone number', 'bws-google-2-step-verification' ); ?></span><br>
 									<input type="tel" class="gglstpvrfctn-userphone" name="gglstpvrfctn_phone" required="required" placeholder="+1234567890" value="<?php if ( ! empty( $user_options[ 'phone' ] ) ) {  echo $user_options[ 'phone' ]; } ?>">
 									<span class="gglstpvrfctn-error"><?php _e( 'A valid phone number is required', 'bws-google-2-step-verification' ); ?></span>
-								</label>
+								</label><br>
 							<?php } ?>
 						</fieldset>
 					</td>
@@ -1509,7 +1577,46 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 						</tr>
 					</table>
 				</div><!-- #gglstpvrfctn_wrapper_backup_code -->
-			<?php } ?>
+			<?php }
+            if ( isset( $gglstpvrfctn_enabled_methods['question'] ) ) {  ?>
+                <div id="gglstpvrfctn_wrapper_question">
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row"><?php _e( 'Secret question : ', 'bws-google-2-step-verification' ); ?></th>
+                            <td>
+                                <fieldset>
+                                    <!-- Edit and Cancel buttons -->
+                                    <button id="gglstpvrfctn-update-question-data" class="gglstpvrfctn-link-button" name="gglstpvrfctn-update-quesiton-data">
+		                                <?php _e( 'Edit question data', 'bws-google-2-step-verification' ); ?>
+                                    </button>
+                                    <button style="display: none;" id="gglstpvrfctn-cancel-question-data" class="gglstpvrfctn-link-button" name="gglstpvrfctn-cancel-quesiton-data">
+		                                <?php _e( 'Cancel', 'bws-google-2-step-verification' ); ?>
+                                    </button>
+
+                                    <!-- question and answer inputs -->
+                                    <div id="gglstpvrfctn-question-data" style="display: none;">
+
+                                        <label><?php _e( 'Enter your secret question :', 'bws-google-2-step-verification' )?><br>
+                                            <input type="text" id="gglstpvrfctn-secret-question" value="<?php echo $question_data['question'] ?>">
+                                        </label><br>
+
+                                        <label><?php _e( 'Enter answer for secret question :', 'bws-google-2-step-verification' )?><br>
+                                            <input type="password" id="gglstpvrfctn-secret-answer" value="<?php echo $question_data['answer'] ?>">
+                                            <span toggle="#password-field" class="dashicons dashicons-hidden gglstpvrfctn-toggle-password"></span>
+                                        </label><br>
+
+                                        <div>
+                                            <button class="button" id="gglstpvrfctn-save-question-data"><?php _e( 'Save', 'bws-google-2-step-verification' )?></button>
+                                            <span id="gglstpvrfctn-question-notice-save"></span>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            <?php }?>
 		</div><!-- #gglstpvrfctn-settings-wrapper -->
 	<?php }
 }
@@ -1559,7 +1666,9 @@ if ( ! function_exists( 'gglstpvrfctn_personal_options_update' ) ) {
 			return;
 		}
 
+		$is_question_data_empty = gglstpvrfctn_get_question_data( $current_user->ID );
 		$user_secret = gglstpvrfctn_get_user_secret( $current_user->ID );
+
 		if ( isset( $_POST['gglstpvrfctn-check-code'] ) ) {
 			$secret = esc_attr( $_POST['gglstpvrfctn-check-code'] );
 			$user_code = trim( esc_attr( str_replace( " ", "", $_POST['gglstpvrfctn-code-test'] ) ) );
@@ -1596,8 +1705,9 @@ if ( ! function_exists( 'gglstpvrfctn_personal_options_update' ) ) {
 			! (
 				( isset( $gglstpvrfctn_enabled_methods['email'] ) && ! empty( $user_options['email'] ) ) ||
 				( isset( $gglstpvrfctn_enabled_methods['authenticator'] ) && ! empty( $user_options['authenticator'] ) && ! empty( $user_secret ) ) ||
-				( isset( $gglstpvrfctn_enabled_methods['backup_code'] ) && ! empty( $user_options['backup_code'] ) && ! empty( $backup_codes ) ) || 
-				( isset( $gglstpvrfctn_enabled_methods['sms'] ) && ! empty( $user_options['sms'] ) )
+				( isset( $gglstpvrfctn_enabled_methods['backup_code'] ) && ! empty( $user_options['backup_code'] ) && ! empty( $backup_codes ) ) ||
+				( isset( $gglstpvrfctn_enabled_methods['sms'] ) && ! empty( $user_options['sms'] ) ) ||
+				( isset( $gglstpvrfctn_enabled_methods['question'] ) && isset( $user_options['question'] ) && ! $is_question_data_empty )
 			)
 		) {
 			$user_options['enabled'] = 0;
@@ -1639,17 +1749,41 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile_update' ) ) {
 	}
 }
 
+/**
+ * Check secret question data ( question, answer )
+ * @since 1.0.5
+ * @param		int		$user_id
+ *
+ * @return		bool	return true if question data( question, answer ) is set
+ */
+if ( ! function_exists( 'gglstpvrfctn_get_question_data' ) ) {
+	function gglstpvrfctn_get_question_data( $user_id ) {
+
+		$user_meta_question_data = get_user_meta( $user_id, 'gglstpvrfctn_secret_question_data', true );
+	    $question_data = unserialize( $user_meta_question_data );
+
+	    if ( empty( $question_data['question'] ) || empty( $question_data['answer'] ) ) {
+	        return true;
+        }
+
+	    return false;
+	}
+}
+
 /* Adding errors on profile update */
 if ( ! function_exists( 'gglstpvrfctn_user_profile_update_errors' ) ) {
 	function gglstpvrfctn_user_profile_update_errors( $errors, $update = null, $user = null ) {
 		global $gglstpvrfctn_enabled_methods, $pagenow, $current_user;
 
 		if ( 'profile.php' == $pagenow ) {
+
 		/* Updating personal settings */
 			$user_id = $current_user->ID;
 
 			$user_secret = gglstpvrfctn_get_user_secret( $user_id );
 			$backup_codes = get_user_meta( $user_id, 'gglstpvrfctn_backup_code' );
+
+			$is_question_data_empty = gglstpvrfctn_get_question_data( $user_id );
 
 			$user_methods = array();
 			foreach ( $gglstpvrfctn_enabled_methods as $method ) {
@@ -1672,8 +1806,9 @@ if ( ! function_exists( 'gglstpvrfctn_user_profile_update_errors' ) ) {
 						( isset( $gglstpvrfctn_enabled_methods['email'] ) && isset( $user_methods['email'] ) ) ||
 						( isset( $gglstpvrfctn_enabled_methods['authenticator'] ) && isset( $user_methods['authenticator'] ) && ! empty( $user_secret ) ) ||
 						( isset( $gglstpvrfctn_enabled_methods['backup_code'] ) && isset( $user_methods['backup_code'] ) && ! empty( $backup_codes ) ) ||
-						( isset( $gglstpvrfctn_enabled_methods['sms'] ) && isset( $user_methods['sms'] ) )
-					) ) {
+						( isset( $gglstpvrfctn_enabled_methods['sms'] ) && isset( $user_methods['sms'] ) ) ||
+                        ( isset( $gglstpvrfctn_enabled_methods['question'] ) && isset( $user_methods['question'] ) && ! $is_question_data_empty )
+						) ) {
 					/* No method was set properly */
 						$message = sprintf(
 							'%s %s',
@@ -1740,6 +1875,115 @@ if ( ! function_exists( 'gglstpvrfctn_get_sms_response' ) ) {
 			$user = get_user_by( 'login', $login );
 			update_user_meta( $user->ID, 'gglstpvrfctn_sms_check', 'true' );
 		}
+	}
+}
+
+if ( ! function_exists( 'gglstpvrfctn_update_secret_question' ) ) {
+	function gglstpvrfctn_update_secret_question() {
+	    global $current_user;
+
+	    if ( empty( $_POST['secret_question'] ) || empty( $_POST['secret_question'] ) ) {
+	        return false;
+        }
+
+	    $question_prepare = sanitize_text_field( $_POST['secret_question'] );
+	    $answer_prepare = sanitize_text_field( $_POST['secret_answer'] );
+
+		$data = serialize( array( 'question' => $question_prepare, 'answer' => $answer_prepare ) );
+
+	    /* save or update secret question data */
+		$result = update_user_meta( $current_user->ID, 'gglstpvrfctn_secret_question_data', $data );
+
+		echo $result ? true : false; /* echo 'saved' - 1, or 'not saved - incorrect data' - 0 */
+
+		wp_die();
+	}
+}
+
+if ( ! function_exists( 'gglstpvrfctn_get_secret_question' ) ) {
+    function gglstpvrfctn_get_secret_question() {
+
+        if ( empty( $_POST['gglstpvrfctn_login'] ) ){
+           return 'empty data';
+        }
+
+        $user = get_user_by( 'login', $_POST['gglstpvrfctn_login'] );
+	    $result = unserialize( get_user_meta( $user->ID, 'gglstpvrfctn_secret_question_data', true ) );
+
+	    $question = ( $result['question'] ) ? '<p>' . _e( 'This is your question : ', 'bws-google-2-step-verification' ) . '</p><p>' . $result['question'] . '</p>' : _e( 'You have empty secret pass', 'bws-google-2-step-verification' );
+
+	    echo $question;
+        wp_die();
+    }
+}
+
+/* Default reset password form - output */
+if ( ! function_exists( 'gglstpvrfctn_reset_password_form' ) ) {
+	function gglstpvrfctn_reset_password_form() {
+
+		gglstpvrfctn_login_enqueue_scripts();
+		gglstpvrfctn_login_form(); ?>
+
+        <input type="hidden" name="reset_pass" value="submit">
+	<?php }
+}
+
+/**
+ *  Verify_code for reset password form
+ *
+ *  @param	int	    $user_id
+ *  @param	string	$answer
+ *
+ * @return bool     $allow
+ */
+if ( ! function_exists( 'gglstpvrfctn_allow_password_reset' ) ) {
+	function gglstpvrfctn_allow_password_reset( $allow ) {
+
+		$login = trim( wp_unslash( $_POST['user_login'] ) );
+		$verification_code = trim( wp_unslash( $_POST['gglstpvrfctn-code'] ) );
+
+		$user = get_user_by( 'login', $login );
+
+		if ( ! $user && strpos( $login, '@' ) ) {
+			$user = get_user_by( 'email', $login );
+		}
+
+		$allow = gglstpvrfctn_verify_code( $user->ID, $verification_code );
+
+		return $allow;
+	}
+}
+
+/* Check code in registration form */
+if ( ! function_exists( 'gglstpvrfctn_register_check' ) ) {
+	function gglstpvrfctn_register_check( $allow ) {
+		global $gglstpvrfctn_options;
+
+		if ( gglstpvrfctn_is_woocommerce_page() || ( 1 !== $gglstpvrfctn_options['unregister_methods']['sms'] ) )
+			return $allow;
+
+		$login= $_POST['user_login'];
+		$email = $_POST['user_email'];
+
+		if ( empty( $allow->errors ) && ! gglstpvrfctn_check_sms_code( $email, $login ) ) {
+			$allow->add( 'gglstpvrfctn_errors', 'Failed 2-Step verification' );
+		}
+
+		return $allow;
+	}
+}
+
+if ( ! function_exists( 'gglstpvrfctn_is_woocommerce_page' ) ) {
+	function gglstpvrfctn_is_woocommerce_page() {
+		$traces = debug_backtrace();
+
+		foreach ( $traces as $trace ) {
+			if ( isset( $trace['file'] ) && false !== strpos( $trace['file'], 'woocommerce' ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 
@@ -1830,3 +2074,7 @@ add_action( 'wp_ajax_gglstpvrfctn_get_sms_response', 'gglstpvrfctn_get_sms_respo
 add_action( 'wp_ajax_nopriv_gglstpvrfctn_get_sms_response', 'gglstpvrfctn_get_sms_response' );
 /* Hide banner with notice using AJAX */
 add_action( 'wp_ajax_gglstpvrfctn_hide_settings_notice', 'gglstpvrfctn_hide_settings_notice' );
+
+add_action( 'wp_ajax_gglstpvrfctn_set_question_data', 'gglstpvrfctn_update_secret_question' );
+add_action( 'wp_ajax_gglstpvrfctn_get_secret_question', 'gglstpvrfctn_get_secret_question' );
+add_action( 'wp_ajax_nopriv_gglstpvrfctn_get_secret_question', 'gglstpvrfctn_get_secret_question' );

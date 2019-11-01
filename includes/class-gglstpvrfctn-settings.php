@@ -62,7 +62,8 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 				'email',
 				'authenticator',
 				'backup_code',
-				'sms'
+				'sms',
+                'question'
 			);
 			$submit_checkboxes = array(
 				'notification_fail'
@@ -153,10 +154,41 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 							<label>
 								<input type="checkbox" value="1" name="gglstpvrfctn_method_sms" <?php checked( 1, $this->options['methods']['sms'] ); ?>/>&nbsp;
 								<?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?>
-							</label>
+							</label><br>
+                            <label>
+                                <input type="checkbox" value="1" name="gglstpvrfctn_method_question" <?php checked( 1, $this->options['methods']['question'] ); ?>/>&nbsp;
+								<?php _e( 'Secret question', 'bws-google-2-step-verification' ); ?>
+                            </label>
 						</fieldset>
 					</td>
 				</tr>
+
+                <?php if ( ! $this->hide_pro_tabs ) { ?>
+                    </table>
+                        <div class="bws_pro_version_bloc">
+                            <div class="bws_pro_version_table_bloc">
+                                <button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'bws-google-2-step-verification' ); ?>"></button>
+                                <div class="bws_table_bg"></div>
+                                <table class="form-table bws_pro_version">
+                                    <tr valign="top">
+                                        <th scope="row"><?php _e( 'Verification Methods for Non-registered Users ', 'bws-google-2-step-verification-pro' ); ?></th>
+                                        <td>
+                                            <fieldset>
+                                                <label>
+                                                    <input type="checkbox" value="1" name="gglstpvrfctn_method_unregister_sms" <?php checked( 1, $this->options['unregister_methods']['sms'] ); ?>/>&nbsp;
+				                                    <?php _e( 'SMS code', 'bws-google-2-step-verification-pro' ); ?>
+                                                </label><br />
+                                            </fieldset>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <?php $this->bws_pro_block_links(); ?>
+                        </div>
+                    <table class="form-table">
+                <?php } ?>
+
 				<tr  id="gglstpvrfctn_firebase_settings">
 					<th scope="row"><?php _e( 'Firebase Settings', 'bws-google-2-step-verification' ); ?></th>
 					<td>

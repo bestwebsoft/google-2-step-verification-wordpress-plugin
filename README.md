@@ -12,6 +12,7 @@
 <li>Email code</li>
 <li>Backup codes</li>
 <li>SMS code</li>
+<li>Secret question [NEW]</li>
 </ul>
 </li>
 <li>Select the user roles that can use Google 2-Step Verification
@@ -40,8 +41,20 @@
 <ul>
 <li>Add Google 2-Step Verification to:
 <ul>
-<li>WooCommerce Login form</li>
-<li>BuddyPress Login form</li>
+<li>WooCommerce
+<ul>
+<li>Login form</li>
+<li>Register form [NEW]</li>
+<li>Reset password form [NEW]</li>
+</ul>
+</li>
+<li>BuddyPress
+<ul>
+<li>Login form</li>
+<li>Register form [NEW]</li>
+<li>Reset password form [NEW]</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Select specific user roles Google 2-Step Verification will be available for</li>

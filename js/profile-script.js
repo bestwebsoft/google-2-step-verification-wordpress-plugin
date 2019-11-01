@@ -77,8 +77,8 @@
 				success: function( data ) {
 					$( '#gglstpvrfctn-get-new-secret' ).hide();
 					$( '#gglstpvrfctn-cancel-new-secret' ).show();
-					$( '#gglstpvrfctn-check-code' ).val( data )
-					$( '#gglstpvrfctn-qr-link' ).data( 'gglstpvrfctn-secret', data )
+					$( '#gglstpvrfctn-check-code' ).val( data );
+					$( '#gglstpvrfctn-qr-link' ).data( 'gglstpvrfctn-secret', data );
 					generateQr();
 					var code = data.match(/.{1,4}/g);
 					code = code.join( ' ' );
@@ -87,6 +87,18 @@
 					$( '#gglstpvrfctn-secret-block' ).slideDown( '400' );
 				}
 			} );
+			e.stopPropagation();
+			return false;
+		} );
+
+		/* click on a button 'edit question data' */
+		$( '#gglstpvrfctn-update-question-data' ).on( 'click', function( e ) {
+			e.preventDefault();
+
+			$( '#gglstpvrfctn-update-question-data' ).hide();
+			$( '#gglstpvrfctn-cancel-question-data' ).show();
+			$( '#gglstpvrfctn-question-data' ).slideDown( '400' );
+
 			e.stopPropagation();
 			return false;
 		} );
@@ -145,6 +157,65 @@
 			$( '#gglstpvrfctn-secret-block' ).slideUp();
 			return false;
 		} );
+
+		/* hide block with question and answer inputs */
+		$( '#gglstpvrfctn-cancel-question-data' ).on( 'click', function( e ) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			$( this ).hide();
+			$( '#gglstpvrfctn-update-question-data' ).show();
+			$( '#gglstpvrfctn-question-data' ).slideUp();
+
+			return false;
+		} );
+
+		/* save secret question */
+		$( '#gglstpvrfctn-save-question-data' ).on( 'click', function( e ) {
+			e.preventDefault();
+
+			/* get secret question and secret answer */
+			var secret_question = $( '#gglstpvrfctn-secret-question' ).val();
+			var secret_answer = $( '#gglstpvrfctn-secret-answer' ).val();
+
+			$.ajax( {
+				type    : 'POST',
+				url     : ajaxurl,
+				data    : {
+					action:						'gglstpvrfctn_set_question_data',
+					gglstpvrfctn_nonce:		gglstpvrfctnScriptVars.ajax_nonce,
+					secret_answer:          secret_answer,
+					secret_question:        secret_question
+				},
+				success: function( data ) {
+					/* show result message */
+					var message = ( data ) ? ' Saved' : ' Not Saved ( value is already exists ) ';
+
+					/* clear the list of classes from the classes saved and not-saved  */
+					$( '#gglstpvrfctn-question-notice-save' ).attr('class', '');
+
+					var questionNoticeClass = ( data ) ? 'gglstpvrfctn-question-data-saved' : 'gglstpvrfctn-question-data-not-saved';
+					$( '#gglstpvrfctn-question-notice-save' ).addClass( questionNoticeClass );
+
+					$( '#gglstpvrfctn-question-notice-save' ).html( message );
+					$( '#gglstpvrfctn-question-notice-save' ).show();
+				}
+			} );
+			e.stopPropagation();
+			return false;
+		} );
+
+		$(".gglstpvrfctn-toggle-password").click(function() {
+
+			var input = $('#gglstpvrfctn-secret-answer'), fieldType;
+
+			$('.gglstpvrfctn-toggle-password').toggleClass('dashicons-hidden');
+			$('.gglstpvrfctn-toggle-password').toggleClass('dashicons-visibility');
+
+			fieldType = ( input.attr("type") == "password" ) ? 'text' : 'password';
+
+			input.attr("type", fieldType);
+		});
 
 		$( '#gglstpvrfctn-generate-backup-codes' ).on( 'click', function( e ) {
 			e.preventDefault();
@@ -205,7 +276,7 @@
 				$('.gglstpvrfctn-userphone').focus();
 				$('.gglstpvrfctn-userphone').removeClass("gglstpvrfctn-valid").addClass("gglstpvrfctn-invalid");
 				$( '.gglstpvrfctn-error' ).show();
-			} 
+			}
 		} );
 
 		/* Hide/Show Phone input for enabled/disabled SMS authentication methods */

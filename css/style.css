@@ -1,13 +1,15 @@
 #gglstpvrfctn-code {
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 }
 .gglstpvrfctn-description {
 	font-size: 12px;
 	color: #999;
 }
 .gglstpvrfctn-request-email,
-.gglstpvrfctn-request-sms {
+.gglstpvrfctn-request-sms,
+.gglstpvrfctn-see-question {
 	margin-bottom: 10px;
+	display: block;
 }
 
 .gglstpvrfctn-link-button {
@@ -34,4 +36,9 @@
 }
 p.gglstpvrfctn-message {
 	color: #0073aa;
+}
+#gglstpvrfctn-secret-question-container {
+	font-size: 14px;
+	display: block;
+	margin-bottom: 10px;
 }

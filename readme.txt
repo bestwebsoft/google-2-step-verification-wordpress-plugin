@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
-Requires at least: 3.9
-Tested up to: 5.2.2
-Stable tag: 1.0.4
+Requires at least: 4.0
+Tested up to: 5.2.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,7 @@ Protect your WordPress website with 2-Step Verification now!
 	* Email code
 	* Backup codes
 	* SMS code
+	* Secret question [NEW]
 * Select the user roles that can use Google 2-Step Verification
 	* All user roles
 	* Administrator
@@ -43,8 +44,14 @@ Protect your WordPress website with 2-Step Verification now!
 > All features from Free version included plus:
 >
 > * Add Google 2-Step Verification to:
-> 	* WooCommerce Login form
-> 	* BuddyPress Login form
+>	* WooCommerce
+> 		* Login form
+> 		* Register form [NEW]
+> 		* Reset password form [NEW]
+> 	* BuddyPress
+> 		* Login form
+> 		* Register form [NEW]
+> 		* Reset password form [NEW]
 > * Select specific user roles Google 2-Step Verification will be available for
 > * Customize email notifications subject and message
 > * Сonfigure all subsites on the network
@@ -123,8 +130,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 1. Google 2-Step Verification on the Login page.
 2. Google 2-Step Verification on the profile page.
 3. Google 2-Step Verification settings page.
+4. Google 2-Step Verification on the Lost password page.
+5. Google 2-Step Verification on the Register page.
 
 == Changelog ==
+
+= V1.0.5 - 01.11.2019 =
+* NEW : Verification via secret question code has been added.
+* Pro : The compatibility with Woocomerce, Buddypress reset and register forms has been added.
 
 = V1.0.4 - 05.09.2019 =
 * Update : The deactivation feedback has been changed. Misleading buttons have been removed.
@@ -142,6 +155,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.5 =
+* New features added.
 
 = V1.0.4 =
 * Usability improved.

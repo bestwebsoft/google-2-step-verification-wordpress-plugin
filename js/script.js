@@ -5,8 +5,8 @@
 		var expiration = 0;
 		var minute_in_seconds = 60000;
 
-		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, .gglstpvrfctn-request-sms, .gglstpvrfctn-resending' ).hide();
-		
+		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, #gglstpvrfctn-see-question, .gglstpvrfctn-request-sms, .gglstpvrfctn-resending' ).hide();
+
 		var form = $( '.gglstpvrfctn-login-wrap' ).closest( 'form' );
 
 		function getUserInfo( user_login ) {
@@ -30,15 +30,23 @@
 						console.log( 'getUserInfo REQUEST: Server response is invalid' );
 					}
 					if ( 1 == user.enabled ) {
+
 						$( '#login_error, .message' ).hide();
+
 						if ( -1 != $.inArray( 'email', user.methods ) ) {
 							$( '.gglstpvrfctn-request-email' ).show();
 						}
 						if ( -1 != $.inArray( 'sms', user.methods ) ) {
 							$( '.gglstpvrfctn-request-sms' ).show();
 						}
+						if ( -1 != $.inArray( 'question', user.methods ) ) {
+							$( '#gglstpvrfctn-see-question' ).show();
+						}
+
 						$( '.gglstpvrfctn-login-wrap' ).show();
+
 						$( '#gglstpvrfctn-code' ).trigger( 'focus' );
+
 					} else {
 						form.removeClass( 'processing' ).trigger( 'submit' );
 					}
@@ -76,6 +84,23 @@
 			} );
 		}
 
+		/* get user secret question */
+		function ajaxGetQuestion() {
+			$.ajax( {
+				type	: 'POST',
+				url		: gglstpvrfctnLoginVars.ajaxurl,
+				data	: {
+					action:						'gglstpvrfctn_get_secret_question',
+					gglstpvrfctn_login:			user_login,
+					gglstpvrfctn_ajax_nonce:	gglstpvrfctnLoginVars.ajax_nonce
+				},
+				success: function( data ) {
+					$('#gglstpvrfctn-secret-question-container').html(data).show();
+					$( '#gglstpvrfctn-code' ).trigger( 'focus' );
+				}
+			} );
+		}
+
 		/* Sending sms code request via AJAX and printing message if code is sent */
 		function ajaxRequestSms ( ) {
 			$.ajax( {
@@ -109,6 +134,8 @@
 						      	window.confirmationResult = confirmationResult;
 						      	$( '#gglstpvrfctn-code' ).prop( 'disabled', false );
 						      	$( '#gglstpvrfctn-recaptcha-container' ).hide();
+
+							    $( '#gglstpvrfctn-code' ).trigger( 'focus' );
 						    } ).catch( function ( error ) {
 						      	// Error; SMS not sent
 						       	console.error( 'Error during signInWithPhoneNumber', error );
@@ -161,6 +188,15 @@
 				}
 			} );
 
+			/* get secret question for user */
+			$( '#gglstpvrfctn-see-question' ).on( 'click', function( e ) {
+
+				e.preventDefault();
+
+				$('#gglstpvrfctn-see-question').hide();
+				ajaxGetQuestion();
+			});
+
 			$( '#gglstpvrfctn-resend' ).on( 'click', function( e ) {
 				e.preventDefault();
 				ajaxRequest();
@@ -170,7 +206,10 @@
 			/* Sending sms code request via AJAX and printing message if code is sent */
 			$( '.gglstpvrfctn-request-sms' ).on( 'click', function( e ) {
 				e.preventDefault();
+
+				$('#gglstpvrfctn-see-question').hide();
 				$( '.gglstpvrfctn-request-email' ).hide();
+
 				ajaxRequestSms();
 			} );
 		}
