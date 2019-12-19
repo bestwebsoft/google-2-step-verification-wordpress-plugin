@@ -2,9 +2,6 @@
 /**
  * Displays the content on the plugin settings page
  */
-
-require_once( dirname( dirname( __FILE__ ) ) . '/bws_menu/class-bws-settings.php' );
-
 if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 	class Gglstpvrfctn_Settings_Tabs extends Bws_Settings_Tabs {
 		public $editable_roles = array();
@@ -56,7 +53,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 		 * @return array    The action results
 		 */
 		public function save_options() {
-			/* Takes all the changed settings on the plugin's admin page and saves them in array 'gglstpvrfctn_options'. */
+			$message = $notice = $error = '';
 
 			$submit_methods = array(
 				'email',
@@ -81,7 +78,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 			}
 
 			foreach ( $submit_firebase_set as $firebase_set ) {
-				$this->options['firebase'][ $firebase_set ] = $_POST["gglstpvrfctn_firebase_{$firebase_set}"];
+				$this->options['firebase'][ $firebase_set ] = sanitize_text_field( $_POST["gglstpvrfctn_firebase_{$firebase_set}"] );
 			}
 
 			$this->options['email_expiration'] = absint( $_POST["gglstpvrfctn_email_expiration"] );
@@ -132,7 +129,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 		 *
 		 */
 		public function tab_settings() { ?>
-			<h3 class="bws_tab_label"><?php _e( 'Google 2-Step Verification Settings', 'bws-google-2-step-verification' ); ?></h3>
+			<h3 class="bws_tab_label"><?php _e( '2-Step Verification Settings', 'bws-google-2-step-verification' ); ?></h3>
 			<?php $this->help_phrase(); ?>
 			<hr>
 			<table class="form-table">
@@ -162,7 +159,6 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 						</fieldset>
 					</td>
 				</tr>
-
                 <?php if ( ! $this->hide_pro_tabs ) { ?>
                     </table>
                         <div class="bws_pro_version_bloc">
@@ -175,7 +171,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
                                         <td>
                                             <fieldset>
                                                 <label>
-                                                    <input type="checkbox" value="1" name="gglstpvrfctn_method_unregister_sms" <?php checked( 1, $this->options['unregister_methods']['sms'] ); ?>/>&nbsp;
+                                                    <input <?php disabled( true ); ?> type="checkbox" value="1" name="gglstpvrfctn_method_unregister_sms" />&nbsp;
 				                                    <?php _e( 'SMS code', 'bws-google-2-step-verification-pro' ); ?>
                                                 </label><br />
                                             </fieldset>
@@ -188,7 +184,6 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
                         </div>
                     <table class="form-table">
                 <?php } ?>
-
 				<tr  id="gglstpvrfctn_firebase_settings">
 					<th scope="row"><?php _e( 'Firebase Settings', 'bws-google-2-step-verification' ); ?></th>
 					<td>
@@ -227,7 +222,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 						<label>
 							<input type="checkbox" id="gglstpvrfctn-all-roles" name="gglstpvrfctn-all-roles" <?php checked( count( $this->options['enabled_roles'] ) == count( $this->editable_roles ) ); ?>/>&nbsp;
 							<span class="gglstpvrfctn-role-name"><?php _e( "All", 'bws-google-2-step-verification' ); ?></span>&nbsp;<span class="bws_info">
-								<?php _e( 'Uncheck if you would like to allow Google 2-Step Verification only for the administrator', 'bws-google-2-step-verification' ); ?>.
+								<?php _e( 'Uncheck if you would like to allow 2-Step Verification only for the administrator', 'bws-google-2-step-verification' ); ?>.
 							</span>
 						</label>
 					</td>

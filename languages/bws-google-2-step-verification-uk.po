@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bws-google-2-step-verification\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 13:49+0300\n"
-"PO-Revision-Date: 2019-10-10 13:57+0300\n"
+"POT-Creation-Date: 2019-12-18 15:48+0200\n"
+"PO-Revision-Date: 2019-12-18 15:48+0200\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: BestWebSoft <plugin@bestwebsoft.com>\n"
 "Language: uk\n"
@@ -13,21 +13,16 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : ((n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: bws_menu\n"
 
-#: bws-google-2-step-verification.php:36 bws-google-2-step-verification.php:46
-#: bws-google-2-step-verification.php:1398
-#: bws-google-2-step-verification.php:1640
-msgid "Google 2-Step Verification"
-msgstr "Google 2-Step Verification"
-
-#: bws-google-2-step-verification.php:47 bws-google-2-step-verification.php:405
-#: bws-google-2-step-verification.php:1843
-#: bws-google-2-step-verification.php:1862
-#: includes/class-gglstpvrfctn-settings.php:25
+#: bws-google-2-step-verification.php:47 bws-google-2-step-verification.php:414
+#: bws-google-2-step-verification.php:1805
+#: bws-google-2-step-verification.php:1824
+#: includes/class-gglstpvrfctn-settings.php:22
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -35,20 +30,20 @@ msgstr "Налаштування"
 msgid "Upgrade to Pro"
 msgstr "Оновити до Pro"
 
-#: bws-google-2-step-verification.php:213
+#: bws-google-2-step-verification.php:220
 msgid "Failed Verification Attempt"
 msgstr "Невдала спроба верифікації"
 
-#: bws-google-2-step-verification.php:214
+#: bws-google-2-step-verification.php:221
 msgid ""
 "Failed 2-Step verification attempt has just been registered at {site_url}."
 msgstr "Невдалу спробу верифікації щойно було зареєстровано на {site_url}."
 
-#: bws-google-2-step-verification.php:215
+#: bws-google-2-step-verification.php:222
 msgid "If it was you, just ignore this message."
 msgstr "Якщо це були Ви, просто ігноруйте це повідомлення."
 
-#: bws-google-2-step-verification.php:216
+#: bws-google-2-step-verification.php:223
 msgid ""
 "You have received this message because failed attempt notifications are "
 "enabled for your account. You can manage your account settings on the "
@@ -58,15 +53,15 @@ msgstr ""
 "верифікації увімкнені для Вашого облікового запису. Ви можете управляти "
 "Вашими налаштуваннями на наступній сторінці"
 
-#: bws-google-2-step-verification.php:218
+#: bws-google-2-step-verification.php:225
 msgid "Verification Code"
 msgstr "Код верифікації"
 
-#: bws-google-2-step-verification.php:219
+#: bws-google-2-step-verification.php:226
 msgid "Your verification code is {new_code}."
 msgstr "Ваш код верифікації: {new_code}."
 
-#: bws-google-2-step-verification.php:220
+#: bws-google-2-step-verification.php:227
 msgid ""
 "You have received this message because someone has just tried to sign in to "
 "your account at {site_url} and requested 2-Step verification code."
@@ -75,49 +70,49 @@ msgstr ""
 "аккаунт на {site_url} і запросив отримання коду для Google 2-Step "
 "Verification."
 
-#: bws-google-2-step-verification.php:316
-#: bws-google-2-step-verification.php:1133
+#: bws-google-2-step-verification.php:323
+#: bws-google-2-step-verification.php:1145
 msgid "Verification code has been sent. Please check your email."
 msgstr "Код верифікації було надіслано. Будь ласка, перевірте вашу пошту."
 
-#: bws-google-2-step-verification.php:318
+#: bws-google-2-step-verification.php:325
 msgid "Some problems occured during email sending."
 msgstr "При відправці email виникли проблеми."
 
-#: bws-google-2-step-verification.php:321
+#: bws-google-2-step-verification.php:328
 msgid "Verification with email code is disabled for this user."
 msgstr "Для цього користувача верифікація по email коду вимкнена."
 
-#: bws-google-2-step-verification.php:385
+#: bws-google-2-step-verification.php:392
 msgid "ERROR"
 msgstr "Помилка"
 
-#: bws-google-2-step-verification.php:386
-msgid "Google 2-Step verification failed."
-msgstr "Перевірку Google 2-Step Verification не пройдено."
+#: bws-google-2-step-verification.php:393
+msgid "2-Step verification failed."
+msgstr "Перевірку 2-Step Verification не пройдено."
 
-#: bws-google-2-step-verification.php:439
+#: bws-google-2-step-verification.php:450
 msgid "SMS not sent. Your API key is invalid"
 msgstr "SMS не надіслано. Ваш ключ API недійсний"
 
-#: bws-google-2-step-verification.php:440
+#: bws-google-2-step-verification.php:451
 msgid "The verification is successfully completed."
 msgstr "Перевірка успішно завершена."
 
-#: bws-google-2-step-verification.php:441
+#: bws-google-2-step-verification.php:452
 msgid "The verification code is invalid."
 msgstr "Код підтвердження недійсний."
 
-#: bws-google-2-step-verification.php:471
+#: bws-google-2-step-verification.php:485
 msgid "Verification code has been resent. Please check your email."
 msgstr ""
 "Код верифікації був повторно відправлений. Будь ласка, перевірте вашу пошту."
 
-#: bws-google-2-step-verification.php:472
+#: bws-google-2-step-verification.php:486
 msgid "Invalid SMS code."
 msgstr "Недійсний SMS код."
 
-#: bws-google-2-step-verification.php:509
+#: bws-google-2-step-verification.php:521
 msgid ""
 "Protect your personal account by enabling 2-step verification option on your "
 "profile page."
@@ -125,120 +120,125 @@ msgstr ""
 "Увімкніть двоетапну верифікацію на сторінці профілю для кращого захисту "
 "вашого облікового запису."
 
-#: bws-google-2-step-verification.php:511
+#: bws-google-2-step-verification.php:523
 msgid "Go to my profile"
 msgstr "Перейти у мій профіль"
 
-#: bws-google-2-step-verification.php:514
-#: includes/class-gglstpvrfctn-settings.php:123
+#: bws-google-2-step-verification.php:526
+#: includes/class-gglstpvrfctn-settings.php:120
 msgid "Close notice"
 msgstr "Закрити повідомлення"
 
-#: bws-google-2-step-verification.php:922
+#: bws-google-2-step-verification.php:934
 msgid "You have no backup codes."
 msgstr "У Вас немає резервних кодів."
 
-#: bws-google-2-step-verification.php:925
+#: bws-google-2-step-verification.php:937
 #, php-format
 msgid "Backup codes for %s"
 msgstr "Резервні коди для %s"
 
-#: bws-google-2-step-verification.php:940
+#: bws-google-2-step-verification.php:952
 msgid "Visit the following page to generate new codes"
 msgstr "Для отримання нових кодів відвідайте наступну сторінку"
 
-#: bws-google-2-step-verification.php:1164
+#: bws-google-2-step-verification.php:1176
 msgid "Verification code has been sent. Please check your phone."
 msgstr "Код верифікації був відправлений. Будь ласка, перевірте ваш телефон."
 
-#: bws-google-2-step-verification.php:1279
-msgid "Google 2-Step Verification value"
-msgstr ""
+#: bws-google-2-step-verification.php:1241
+msgid "2-Step Verification value"
+msgstr "Код 2-Step Verification"
 
-#: bws-google-2-step-verification.php:1284
+#: bws-google-2-step-verification.php:1246
 msgid "Insert the code if you enabled 2-Step verification for your profile"
 msgstr "Введіть код якщо Ви вмикали двоетапну верифікацію для свого профілю"
 
-#: bws-google-2-step-verification.php:1288
+#: bws-google-2-step-verification.php:1250
 msgid "Show secret question"
 msgstr "Показати секретне питання"
 
-#: bws-google-2-step-verification.php:1294
+#: bws-google-2-step-verification.php:1256
 msgid "Send me a code via email"
 msgstr "Отримати код по email"
 
-#: bws-google-2-step-verification.php:1298
+#: bws-google-2-step-verification.php:1260
 msgid "Send me a code via sms"
 msgstr "Отримати код по sms"
 
-#: bws-google-2-step-verification.php:1302
+#: bws-google-2-step-verification.php:1264
 msgid "The code has been already sent."
 msgstr "Код вже був відправлений."
 
-#: bws-google-2-step-verification.php:1303
+#: bws-google-2-step-verification.php:1265
 msgid "Resend Code"
 msgstr "Повторно надіслати код"
 
-#: bws-google-2-step-verification.php:1304
-#: bws-google-2-step-verification.php:1489
-#: bws-google-2-step-verification.php:1593
+#: bws-google-2-step-verification.php:1266
+#: bws-google-2-step-verification.php:1451
+#: bws-google-2-step-verification.php:1555
 msgid "Cancel"
 msgstr "Відміна"
 
-#: bws-google-2-step-verification.php:1402
-#: bws-google-2-step-verification.php:1644
+#: bws-google-2-step-verification.php:1360
+#: bws-google-2-step-verification.php:1602
+msgid "2-Step Verification"
+msgstr "2-Step Verification"
+
+#: bws-google-2-step-verification.php:1364
+#: bws-google-2-step-verification.php:1606
 msgid "Verification"
 msgstr "Верифікація"
 
-#: bws-google-2-step-verification.php:1408
-msgid "Enable to activate Google 2-Step Verification."
-msgstr "Увімкніть, щоб активувати Google 2-Step Verification."
+#: bws-google-2-step-verification.php:1370
+msgid "Enable to activate 2-Step Verification."
+msgstr "Увімкніть, щоб активувати 2-Step Verification."
 
-#: bws-google-2-step-verification.php:1417
-#: includes/class-gglstpvrfctn-settings.php:140
+#: bws-google-2-step-verification.php:1379
+#: includes/class-gglstpvrfctn-settings.php:137
 msgid "Verification Methods"
 msgstr "Методи верифікації"
 
-#: bws-google-2-step-verification.php:1423
-#: includes/class-gglstpvrfctn-settings.php:144
+#: bws-google-2-step-verification.php:1385
+#: includes/class-gglstpvrfctn-settings.php:141
 msgid "Email"
 msgstr "Email"
 
-#: bws-google-2-step-verification.php:1429
-#: includes/class-gglstpvrfctn-settings.php:148
+#: bws-google-2-step-verification.php:1391
+#: includes/class-gglstpvrfctn-settings.php:145
 msgid "Authenticator app"
 msgstr "Додаток Authenticator"
 
-#: bws-google-2-step-verification.php:1435
-#: includes/class-gglstpvrfctn-settings.php:152
+#: bws-google-2-step-verification.php:1397
+#: includes/class-gglstpvrfctn-settings.php:149
 msgid "Backup codes"
 msgstr "Резервні коди"
 
-#: bws-google-2-step-verification.php:1441
-#: includes/class-gglstpvrfctn-settings.php:160
+#: bws-google-2-step-verification.php:1403
+#: includes/class-gglstpvrfctn-settings.php:157
 msgid "Secret question"
 msgstr "Секретне запитання"
 
-#: bws-google-2-step-verification.php:1447
-#: includes/class-gglstpvrfctn-settings.php:156
-#: includes/class-gglstpvrfctn-settings.php:179
+#: bws-google-2-step-verification.php:1409
+#: includes/class-gglstpvrfctn-settings.php:153
+#: includes/class-gglstpvrfctn-settings.php:175
 msgid "SMS code"
 msgstr "SMS код"
 
-#: bws-google-2-step-verification.php:1450
+#: bws-google-2-step-verification.php:1412
 msgid "Phone number"
 msgstr "Номер телефону"
 
-#: bws-google-2-step-verification.php:1452
-#: includes/class-gglstpvrfctn-settings.php:206
+#: bws-google-2-step-verification.php:1414
+#: includes/class-gglstpvrfctn-settings.php:201
 msgid "A valid phone number is required"
 msgstr "Потрібен правильний номер телефону"
 
-#: bws-google-2-step-verification.php:1460
+#: bws-google-2-step-verification.php:1422
 msgid "Failed Attempt Notifications"
 msgstr "Повідомлення про невдалі спроби"
 
-#: bws-google-2-step-verification.php:1464
+#: bws-google-2-step-verification.php:1426
 msgid ""
 "Enable if you want to receive email notifications about each failed "
 "verification attempt."
@@ -246,46 +246,46 @@ msgstr ""
 "Увімкніть, якщо Ви хочете отримувати email повідомлення про невдалі спроби "
 "верифікації."
 
-#: bws-google-2-step-verification.php:1475
+#: bws-google-2-step-verification.php:1437
 msgid "Authenticator App"
 msgstr "Додаток Authenticator"
 
-#: bws-google-2-step-verification.php:1480
+#: bws-google-2-step-verification.php:1442
 msgid "Not verified"
 msgstr "Не перевірено"
 
-#: bws-google-2-step-verification.php:1483
+#: bws-google-2-step-verification.php:1445
 msgid "Verified"
 msgstr "Перевірено"
 
-#: bws-google-2-step-verification.php:1486
+#: bws-google-2-step-verification.php:1448
 msgid "Edit"
 msgstr "Змінити"
 
-#: bws-google-2-step-verification.php:1493
+#: bws-google-2-step-verification.php:1455
 msgid "Done! Your Authenticator app is set."
 msgstr "Готово! Ваш додаток Authenticator налаштовано."
 
-#: bws-google-2-step-verification.php:1499
+#: bws-google-2-step-verification.php:1461
 #, php-format
 msgid ""
 "Download and install Authenticator application on your %s, %s or %s device."
 msgstr ""
 "Завантажте та встановіть додаток Authenticator на Ваш пристрій %s, %s або %s."
 
-#: bws-google-2-step-verification.php:1507
+#: bws-google-2-step-verification.php:1469
 msgid "Scan the following QR code using Authenticator application."
 msgstr "Проскануйте наступний QR код за допомогою додатка Authenticator."
 
-#: bws-google-2-step-verification.php:1509
+#: bws-google-2-step-verification.php:1471
 msgid "Can't scan the QR code?"
 msgstr "Не вдалося просканувати QR код?"
 
-#: bws-google-2-step-verification.php:1512
+#: bws-google-2-step-verification.php:1474
 msgid "Enter the secret key below into your Authenticator application manually"
 msgstr "Введіть наступний секретний ключ у Ваш додаток Authenticator вручну"
 
-#: bws-google-2-step-verification.php:1518
+#: bws-google-2-step-verification.php:1480
 msgid ""
 "Once you have entered the secret key, enter and verify the 6-digit "
 "verification code generated by the Authenticator app"
@@ -293,7 +293,7 @@ msgstr ""
 "Після того як Ви ввели секретний ключ, введіть і перевірте шестизначний код, "
 "згенерований додатком Authenticator"
 
-#: bws-google-2-step-verification.php:1520
+#: bws-google-2-step-verification.php:1482
 msgid ""
 "Once you have scanned the QR code (or entered the secret key manually), "
 "enter and verify the 6-digit verification code generated by the "
@@ -302,32 +302,32 @@ msgstr ""
 "Після того як Ви просканували QR код (або ввели секретний ключ вручну), "
 "введіть і перевірте шестизначний код, згенерований додатком Authenticator"
 
-#: bws-google-2-step-verification.php:1523
+#: bws-google-2-step-verification.php:1485
 msgid "Verify"
 msgstr "Перевірити"
 
-#: bws-google-2-step-verification.php:1526
+#: bws-google-2-step-verification.php:1488
 msgid "Wrong code, try again."
 msgstr "Невірний код, спробуйте ще раз."
 
-#: bws-google-2-step-verification.php:1541
+#: bws-google-2-step-verification.php:1503
 msgid "Backup Codes"
 msgstr "Резервні коди"
 
-#: bws-google-2-step-verification.php:1546
+#: bws-google-2-step-verification.php:1508
 #, php-format
 msgid "Codes left: %s"
 msgstr "Залишилось кодів: %s"
 
-#: bws-google-2-step-verification.php:1555
+#: bws-google-2-step-verification.php:1517
 msgid "Download as TXT"
 msgstr "Завантажити як TXT"
 
-#: bws-google-2-step-verification.php:1558
+#: bws-google-2-step-verification.php:1520
 msgid "Generate New Codes"
 msgstr "Отримати нові коди"
 
-#: bws-google-2-step-verification.php:1562
+#: bws-google-2-step-verification.php:1524
 msgid ""
 "Each Backup code can be used only once. You should keep it somewhere safe "
 "but accessible."
@@ -335,94 +335,94 @@ msgstr ""
 "Ви можете використовувати кожен резервний код лише один раз. Зберігайте Ваші "
 "коди у безпечному, але доступному місці."
 
-#: bws-google-2-step-verification.php:1564
-#: bws-google-2-step-verification.php:1565
+#: bws-google-2-step-verification.php:1526
+#: bws-google-2-step-verification.php:1527
 msgid "Show Codes"
 msgstr "Відобразити коди"
 
-#: bws-google-2-step-verification.php:1564
+#: bws-google-2-step-verification.php:1526
 msgid "Hide Codes"
 msgstr "Сховати коди"
 
-#: bws-google-2-step-verification.php:1585
+#: bws-google-2-step-verification.php:1547
 msgid "Secret question : "
 msgstr "Секретне питання :"
 
-#: bws-google-2-step-verification.php:1590
+#: bws-google-2-step-verification.php:1552
 msgid "Edit question data"
 msgstr "Редагувати запитання"
 
-#: bws-google-2-step-verification.php:1599
+#: bws-google-2-step-verification.php:1561
 msgid "Enter your secret question :"
 msgstr "Введіть ваше секретне запитання"
 
-#: bws-google-2-step-verification.php:1603
+#: bws-google-2-step-verification.php:1565
 msgid "Enter answer for secret question :"
 msgstr "Введіть відповідь на  ваше секретне запитання"
 
-#: bws-google-2-step-verification.php:1609
+#: bws-google-2-step-verification.php:1571
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
-#: bws-google-2-step-verification.php:1650
-msgid "Enable if you want the user to use Google 2-Step Verification."
+#: bws-google-2-step-verification.php:1612
+msgid "Enable if you want the user to use 2-Step Verification."
 msgstr "Увімкніть, якщо Ви хочете увімкнути верифікацію для користувача."
 
-#: bws-google-2-step-verification.php:1800
+#: bws-google-2-step-verification.php:1762
 msgid "You should enable and configure at least one verification method."
 msgstr "Необхідно увімкнути і налаштувати хоча б один метод верифікації."
 
-#: bws-google-2-step-verification.php:1801
-#: bws-google-2-step-verification.php:1816
-msgid "Google 2-Step Verification has been disabled."
+#: bws-google-2-step-verification.php:1763
+#: bws-google-2-step-verification.php:1778
+msgid "2-Step Verification has been disabled."
 msgstr "Двоетапну верифікацію було вимкнено."
 
-#: bws-google-2-step-verification.php:1815
+#: bws-google-2-step-verification.php:1777
 msgid "At least one enabled verification method should be configured properly."
 msgstr ""
 "Необхідно коректно налаштувати хоча б один включений метод верифікації."
 
-#: bws-google-2-step-verification.php:1845
+#: bws-google-2-step-verification.php:1807
 msgid "FAQ"
 msgstr "FAQ"
 
-#: bws-google-2-step-verification.php:1846
+#: bws-google-2-step-verification.php:1808
 msgid "Support"
 msgstr "Підтримка"
 
-#: bws-google-2-step-verification.php:1913
+#: bws-google-2-step-verification.php:1875
 msgid "This is your question : "
 msgstr "Ваше запитання :"
 
-#: bws-google-2-step-verification.php:1913
+#: bws-google-2-step-verification.php:1875
 msgid "You have empty secret pass"
 msgstr "Ваше секретне питання порожне"
 
-#: includes/class-gglstpvrfctn-settings.php:26
+#: includes/class-gglstpvrfctn-settings.php:23
 msgid "Misc"
 msgstr "Різне"
 
-#: includes/class-gglstpvrfctn-settings.php:27
+#: includes/class-gglstpvrfctn-settings.php:24
 msgid "Custom Code"
 msgstr "Користувацький код"
 
-#: includes/class-gglstpvrfctn-settings.php:28
+#: includes/class-gglstpvrfctn-settings.php:25
 msgid "License Key"
 msgstr "Ліцензійний ключ"
 
-#: includes/class-gglstpvrfctn-settings.php:97
+#: includes/class-gglstpvrfctn-settings.php:94
 msgid "Settings saved."
 msgstr "Налаштування збережено."
 
-#: includes/class-gglstpvrfctn-settings.php:112
+#: includes/class-gglstpvrfctn-settings.php:109
 msgid "Please enable JavaScript in Your browser."
 msgstr "Будь ласка, активуйте JavaScript у Вашому браузері."
 
-#: includes/class-gglstpvrfctn-settings.php:119
+#: includes/class-gglstpvrfctn-settings.php:116
 msgid "Note"
 msgstr "Увага"
 
-#: includes/class-gglstpvrfctn-settings.php:120
+#: includes/class-gglstpvrfctn-settings.php:117
 msgid ""
 "Users should enable 2-step verification option for their accounts on the "
 "personal profile page."
@@ -430,25 +430,25 @@ msgstr ""
 "Користувачі повинні особисто увімкнути двоетапну верифікацію на сторінці "
 "редагування власного профілю."
 
-#: includes/class-gglstpvrfctn-settings.php:135
-msgid "Google 2-Step Verification Settings"
-msgstr "Налаштування Google 2-Step Verification"
+#: includes/class-gglstpvrfctn-settings.php:132
+msgid "2-Step Verification Settings"
+msgstr "Налаштування 2-Step Verification"
 
-#: includes/class-gglstpvrfctn-settings.php:170
-#: includes/class-gglstpvrfctn-settings.php:239
-#: includes/class-gglstpvrfctn-settings.php:303
+#: includes/class-gglstpvrfctn-settings.php:166
+#: includes/class-gglstpvrfctn-settings.php:234
+#: includes/class-gglstpvrfctn-settings.php:298
 msgid "Close"
 msgstr "Закрити"
 
-#: includes/class-gglstpvrfctn-settings.php:174
+#: includes/class-gglstpvrfctn-settings.php:170
 msgid "Verification Methods for Non-registered Users "
 msgstr "Методи верифікації для незареєстрованих користувачів"
 
-#: includes/class-gglstpvrfctn-settings.php:193
+#: includes/class-gglstpvrfctn-settings.php:188
 msgid "Firebase Settings"
 msgstr "Налаштування Firebase"
 
-#: includes/class-gglstpvrfctn-settings.php:196
+#: includes/class-gglstpvrfctn-settings.php:191
 msgid ""
 "Register your website in firebase console to get required API key and enter "
 "it below."
@@ -456,78 +456,77 @@ msgstr ""
 "Зареєструйте свій сайт в консолі firebase, щоб отримати необхідний ключ API "
 "і введіть його нижче."
 
-#: includes/class-gglstpvrfctn-settings.php:196
+#: includes/class-gglstpvrfctn-settings.php:191
 msgid "Go to Firebase"
 msgstr "Перейти до Firebase"
 
-#: includes/class-gglstpvrfctn-settings.php:197
+#: includes/class-gglstpvrfctn-settings.php:192
 msgid "If your need help setting up the Firebase, please read our"
 msgstr ""
 "Якщо вам потрібна допомога в налаштуванні Firebase, будь ласка, прочитайте"
 
-#: includes/class-gglstpvrfctn-settings.php:197
+#: includes/class-gglstpvrfctn-settings.php:192
 msgid "Step-by-step Instruction"
 msgstr "Покрокову інструкцію"
 
-#: includes/class-gglstpvrfctn-settings.php:199
+#: includes/class-gglstpvrfctn-settings.php:194
 msgid "API Key"
 msgstr "Ключ API"
 
-#: includes/class-gglstpvrfctn-settings.php:201
+#: includes/class-gglstpvrfctn-settings.php:196
 msgid "Test Firebase SMS Auth"
 msgstr "Перевірити Firebase SMS Auth"
 
-#: includes/class-gglstpvrfctn-settings.php:205
+#: includes/class-gglstpvrfctn-settings.php:200
 msgid "Test phone number"
 msgstr "Перевірити номер телефону"
 
-#: includes/class-gglstpvrfctn-settings.php:208
+#: includes/class-gglstpvrfctn-settings.php:203
 msgid "Send test SMS"
 msgstr "Надіслати тестове SMS-повідомлення"
 
-#: includes/class-gglstpvrfctn-settings.php:213
+#: includes/class-gglstpvrfctn-settings.php:208
 msgid "Enter the code from sms and click 'Test code' button "
 msgstr "Введіть код з sms і натисніть кнопку 'Перевірити код'"
 
-#: includes/class-gglstpvrfctn-settings.php:216
+#: includes/class-gglstpvrfctn-settings.php:211
 msgid "Test code"
 msgstr "Перевірити код"
 
-#: includes/class-gglstpvrfctn-settings.php:225
+#: includes/class-gglstpvrfctn-settings.php:220
 msgid "Allow Using Verification for"
 msgstr "Дозволити використання двоетапної верифікації для"
 
-#: includes/class-gglstpvrfctn-settings.php:229
+#: includes/class-gglstpvrfctn-settings.php:224
 msgid "All"
 msgstr "Всі"
 
-#: includes/class-gglstpvrfctn-settings.php:230
+#: includes/class-gglstpvrfctn-settings.php:225
 msgid ""
-"Uncheck if you would like to allow Google 2-Step Verification only for the "
+"Uncheck if you would like to allow 2-Step Verification only for the "
 "administrator"
 msgstr ""
-"Вимкніть, щоб дозволити використання Google 2-Step Verification лише "
-"адміністратору"
+"Вимкніть, щоб дозволити використання 2-Step Verification лише адміністратору"
 
-#: includes/class-gglstpvrfctn-settings.php:266
+#: includes/class-gglstpvrfctn-settings.php:261
 msgid "Email Codes Expiration Time"
 msgstr "Термін дії email кодів"
 
-#: includes/class-gglstpvrfctn-settings.php:269
-#: includes/class-gglstpvrfctn-settings.php:280
+#: includes/class-gglstpvrfctn-settings.php:264
+#: includes/class-gglstpvrfctn-settings.php:275
 msgid "minute(-s)"
 msgstr "хвилин(а)"
 
-#: includes/class-gglstpvrfctn-settings.php:270
+#: includes/class-gglstpvrfctn-settings.php:265
 #, php-format
 msgid "Set \"%d\" to disable expiration time."
 msgstr "Встановіть \"%d\", щоб відключити термін дії коду."
 
-#: includes/class-gglstpvrfctn-settings.php:275
+#: includes/class-gglstpvrfctn-settings.php:270
 msgid "Authenticator Time Window"
 msgstr "Термін дії кодів Authenticator"
 
-#: includes/class-gglstpvrfctn-settings.php:281
+#: includes/class-gglstpvrfctn-settings.php:276
 msgid ""
 "Time-based codes generation depends upon the time. The time on your web-"
 "server and on device with Authenticator app should be the same. You can "
@@ -537,18 +536,18 @@ msgstr ""
 "Зміна налаштувань плагіна на цьому сайті заборонено мережевими настройками "
 "Google 2-Step Verification Pro"
 
-#: includes/class-gglstpvrfctn-settings.php:283
+#: includes/class-gglstpvrfctn-settings.php:278
 #, php-format
 msgid "Set \"%d\" to use default value (default is %d sec)."
 msgstr ""
 "Встановіть \"%d\", щоб використовувати стандартне значення (за замовчуванням "
 "%d сек)."
 
-#: includes/class-gglstpvrfctn-settings.php:290
+#: includes/class-gglstpvrfctn-settings.php:285
 msgid "Email Notifications"
 msgstr "Email повідомлення"
 
-#: includes/class-gglstpvrfctn-settings.php:294
+#: includes/class-gglstpvrfctn-settings.php:289
 msgid ""
 "Enable to activate failed verification attempts notifications option for "
 "users (users should enable appropriate option in their profiles to receive "
@@ -558,60 +557,57 @@ msgstr ""
 "невдалі спроби (користувачі повинні увімкнути відповідну опцію на сторінці "
 "свого профілю для отримання email повідомлень)."
 
-#: includes/class-gglstpvrfctn-settings.php:307
+#: includes/class-gglstpvrfctn-settings.php:302
 msgid "Subject"
 msgstr "Тема"
 
-#: includes/class-gglstpvrfctn-settings.php:313
+#: includes/class-gglstpvrfctn-settings.php:308
 msgid "Message"
 msgstr "Повідомлення"
 
-#: includes/class-gglstpvrfctn-settings.php:317
+#: includes/class-gglstpvrfctn-settings.php:312
 msgid "Allowed variables"
 msgstr "Доступні змінні"
 
-#: includes/class-gglstpvrfctn-settings.php:318
+#: includes/class-gglstpvrfctn-settings.php:313
 msgid "User name"
 msgstr "Ім'я користувача"
 
-#: includes/class-gglstpvrfctn-settings.php:319
+#: includes/class-gglstpvrfctn-settings.php:314
 msgid "User email"
 msgstr "Email користувача"
 
-#: includes/class-gglstpvrfctn-settings.php:320
+#: includes/class-gglstpvrfctn-settings.php:315
 msgid "Site name"
 msgstr "Назва сайту"
 
-#: includes/class-gglstpvrfctn-settings.php:321
+#: includes/class-gglstpvrfctn-settings.php:316
 msgid "Site URL"
 msgstr "Адреса сайту"
 
-#: includes/class-gglstpvrfctn-settings.php:322
+#: includes/class-gglstpvrfctn-settings.php:317
 msgid "Date and time when the IP address was blocked"
 msgstr "Дата і час, коли спробу входу було запобіжено"
 
-#: includes/class-gglstpvrfctn-settings.php:323
+#: includes/class-gglstpvrfctn-settings.php:318
 msgid "Blocked IP address"
 msgstr "Заблокована IP адреса"
 
-#: includes/class-gglstpvrfctn-settings.php:324
+#: includes/class-gglstpvrfctn-settings.php:319
 msgid "Profile settings page URL"
 msgstr "Адреса сторінки налаштувань користувача"
 
-#: includes/class-gglstpvrfctn-settings.php:329
+#: includes/class-gglstpvrfctn-settings.php:324
 msgid "Restore Default Email Notifications"
 msgstr "Відновлення email повідомлень"
 
-#: includes/class-gglstpvrfctn-settings.php:331
+#: includes/class-gglstpvrfctn-settings.php:326
 msgid "Restore Email Notifications"
 msgstr "Відновити повідомлення"
 
-#: includes/class-gglstpvrfctn-settings.php:333
+#: includes/class-gglstpvrfctn-settings.php:328
 msgid "Restore default email notifications."
 msgstr "Відновити email повідомлення за замовчуванням."
-
-#~ msgid "Google 2-Step Verification code"
-#~ msgstr "Код Google 2-Step Verification"
 
 #~ msgid "Visit Firebase"
 #~ msgstr "Відвідати Firebase"

@@ -1,10 +1,10 @@
-﻿=== Google 2-Step Verification by BestWebSoft ===
+﻿=== 2-Step Verification by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
-Requires at least: 4.0
-Tested up to: 5.2.4
-Stable tag: 1.0.5
+Requires at least: 4.5
+Tested up to: 5.3.1
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,20 +12,20 @@ Stronger security solution which protects your WordPress website from hacks and 
 
 == Description ==
 
-Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.
+2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.
 
 Protect your WordPress website with 2-Step Verification now!
 
 = Free Features =
 
-* Add Google 2-Step Verification to the default WordPress Login form
+* Add 2-Step Verification to the default WordPress Login form
 * Enable verification methods:
 	* Authenticator app code
 	* Email code
 	* Backup codes
 	* SMS code
-	* Secret question [NEW]
-* Select the user roles that can use Google 2-Step Verification
+	* Secret question
+* Select the user roles that can use 2-Step Verification
 	* All user roles
 	* Administrator
 * Enable 2-step verification option for user account on the personal profile page
@@ -43,16 +43,16 @@ Protect your WordPress website with 2-Step Verification now!
 >
 > All features from Free version included plus:
 >
-> * Add Google 2-Step Verification to:
+> * Add 2-Step Verification to:
 >	* WooCommerce
 > 		* Login form
-> 		* Register form [NEW]
-> 		* Reset password form [NEW]
+> 		* Register form
+> 		* Reset password form
 > 	* BuddyPress
 > 		* Login form
-> 		* Register form [NEW]
-> 		* Reset password form [NEW]
-> * Select specific user roles Google 2-Step Verification will be available for
+> 		* Register form
+> 		* Reset password form
+> * Select specific user roles 2-Step Verification will be available for
 > * Customize email notifications subject and message
 > * Сonfigure all subsites on the network
 > * Get answer to your support question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
@@ -85,7 +85,7 @@ Some of these translations are not complete. We are constantly adding new featur
 
 1. Upload the `bws-google-2-step-verification` folder to `/wp-content/plugins/` directory.
 2. Activate the plugin using the 'Plugins' menu in your WordPress admin panel.
-3. You can adjust the necessary settings using your WordPress admin panel in "Dashboard" > "Google 2-Step".
+3. You can adjust the necessary settings using your WordPress admin panel in "Dashboard" > "2-Step".
 
 == Frequently Asked Questions ==
 
@@ -101,12 +101,12 @@ Please follow the instructions below:
 1. Email messages can be marked as spam on the server.
 2. Perhaps email sending is not set. You should install an extra plugin called [SMTP by BestWebSoft](https://bestwebsoft.com/products/wordpress/plugins/smtp/) and configure it. Afterwards you should open the "Send A Test Email" tab on the plugin settings page, check an option "Display log", send a test email and you will see if the plugin logs have errors.
 
-= Google 2-Step Verification not displayed on my Login form. Why? =
+= 2-Step Verification not displayed on my Login form. Why? =
 
-Probably, your theme uses custom Login form. Follow the next steps in order to add Google 2-Step Verification to a custom Login form on your Wordpress website:
-1. Install the Google 2-Step Verification plugin and activate it.
-2. Open the file (PHP or HTML) with the form (where you would like to add Google 2-Step Verification to).
-3. Insert the following line to display the Google 2-Step Verification.
+Probably, your theme uses custom Login form. Follow the next steps in order to add 2-Step Verification to a custom Login form on your Wordpress website:
+1. Install the 2-Step Verification plugin and activate it.
+2. Open the file (PHP or HTML) with the form (where you would like to add 2-Step Verification to).
+3. Insert the following line to display the 2-Step Verification.
 
 For PHP:
 
@@ -127,13 +127,17 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Screenshots ==
 
-1. Google 2-Step Verification on the Login page.
-2. Google 2-Step Verification on the profile page.
-3. Google 2-Step Verification settings page.
-4. Google 2-Step Verification on the Lost password page.
-5. Google 2-Step Verification on the Register page.
+1. 2-Step Verification on the Login page.
+2. 2-Step Verification on the profile page.
+3. 2-Step Verification settings page.
+4. 2-Step Verification on the Lost password page.
+5. 2-Step Verification on the Register page.
 
 == Changelog ==
+
+= V1.0.6 - 19.12.2019 =
+* Update : Plugin was renamed.
+* Bugfix : Vulnerabilities and security issues were fixed.
 
 = V1.0.5 - 01.11.2019 =
 * NEW : Verification via secret question code has been added.
@@ -155,6 +159,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.6 =
+* Bugs fixed.
 
 = V1.0.5 =
 * New features added.

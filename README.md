@@ -1,21 +1,21 @@
 <a href="https://bestwebsoft.com/products/wordpress/plugins/google-2-step-verification/" target=_blank>Google 2-Step Verification WordPress Plugin</a>
 ========================
 
-<p>Google 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.</p>
+<p>2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.</p>
 <p>Protect your WordPress website with 2-Step Verification now!</p>
 <h4>Free Features</h4>
 <ul>
-<li>Add Google 2-Step Verification to the default WordPress Login form</li>
+<li>Add 2-Step Verification to the default WordPress Login form</li>
 <li>Enable verification methods:
 <ul>
 <li>Authenticator app code</li>
 <li>Email code</li>
 <li>Backup codes</li>
 <li>SMS code</li>
-<li>Secret question [NEW]</li>
+<li>Secret question</li>
 </ul>
 </li>
-<li>Select the user roles that can use Google 2-Step Verification
+<li>Select the user roles that can use 2-Step Verification
 <ul>
 <li>All user roles</li>
 <li>Administrator</li>
@@ -39,25 +39,25 @@
 <p><strong>Pro Features</strong></p>
 <p>All features from Free version included plus:</p>
 <ul>
-<li>Add Google 2-Step Verification to:
+<li>Add 2-Step Verification to:
 <ul>
 <li>WooCommerce
 <ul>
 <li>Login form</li>
-<li>Register form [NEW]</li>
-<li>Reset password form [NEW]</li>
+<li>Register form</li>
+<li>Reset password form</li>
 </ul>
 </li>
 <li>BuddyPress
 <ul>
 <li>Login form</li>
-<li>Register form [NEW]</li>
-<li>Reset password form [NEW]</li>
+<li>Register form</li>
+<li>Reset password form</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Select specific user roles Google 2-Step Verification will be available for</li>
+<li>Select specific user roles 2-Step Verification will be available for</li>
 <li>Customize email notifications subject and message</li>
 <li>Сonfigure all subsites on the network</li>
 <li>Get answer to your support question within one business day (<a href="https://bestwebsoft.com/support-policy/" rel="nofollow">Support Policy</a>)</li>
