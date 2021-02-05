@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 4.5
-Tested up to: 5.3.1
-Stable tag: 1.0.6
+Tested up to: 5.6.1
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,7 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation =
 
+* [[Doc] User Guide](https://docs.google.com/document/d/1NpFcZ7cjPf8ThbdRgad9Ezm_hpL9X4bWLrOcZ-tBS-8/)
 * [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 
 = Help & Support =
@@ -71,6 +72,7 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 
 = Translation =
 
+* Polish (pl_PL) (thanks to [Trui](mailto:klockiewicz@trui.pl))
 * Russian (ru_RU)
 * Ukrainian (uk)
 
@@ -130,10 +132,18 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 1. 2-Step Verification on the Login page.
 2. 2-Step Verification on the profile page.
 3. 2-Step Verification settings page.
-4. 2-Step Verification on the Lost password page.
-5. 2-Step Verification on the Register page.
+4. 2-Step Verification settings which allow to customize email messages.
+5. 2-Step Verification on the Lost password page.
+6. 2-Step Verification on the Register page.
 
 == Changelog ==
+
+= V1.0.7 - 05.02.2021 =
+* NEW : Ability 2-step authentication via email to the new user by default.
+* NEW : The Polish language file is added.
+* Update : The plugin settings page has been updated.
+* Update : All functionality for WordPress 5.6.1 was updated.
+* Update : BWS Panel section is updated.
 
 = V1.0.6 - 19.12.2019 =
 * Update : Plugin was renamed.
@@ -159,6 +169,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.7 =
+* New features added.
+* New languages added.
+* Plugin optimization completed.
+* The compatibility with new WordPress version updated.
 
 = V1.0.6 =
 * Bugs fixed.

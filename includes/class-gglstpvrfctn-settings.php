@@ -20,6 +20,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 
 			$tabs = array(
 				'settings' 		=> array( 'label' => __( 'Settings', 'bws-google-2-step-verification' ) ),
+				'notifications' => array( 'label' => __( 'Notifications', 'bws-google-2-step-verification' ) ),
 				'misc' 			=> array( 'label' => __( 'Misc', 'bws-google-2-step-verification' ) ),
 				'custom_code' 	=> array( 'label' => __( 'Custom Code', 'bws-google-2-step-verification' ) ),
 				'license'		=> array( 'label' => __( 'License Key', 'bws-google-2-step-verification' ) )
@@ -34,11 +35,10 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 				'is_network_options'	=> is_network_admin(),
 				'tabs'					=> $tabs,
 				'wp_slug'				=> 'bws-google-2-step-verification',
-				'pro_page' 			 => 'admin.php?page=google-2-step-verification-pro.php',
-				'bws_license_plugin' => 'bws-google-2-step-verification-pro/bws-google-2-step-verification-pro.php',
 				'link_key' 			 => 'cafb0895a5730b761de64b55183d7a5b',
-				'link_pn' 			 => '670'
-			) );
+				'link_pn' 			 => '670',
+				'doc_link'				=> 'https://docs.google.com/document/d/1NpFcZ7cjPf8ThbdRgad9Ezm_hpL9X4bWLrOcZ-tBS-8/'
+				) );
 
 			$this->editable_roles = get_editable_roles();
 
@@ -80,6 +80,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 			foreach ( $submit_firebase_set as $firebase_set ) {
 				$this->options['firebase'][ $firebase_set ] = sanitize_text_field( $_POST["gglstpvrfctn_firebase_{$firebase_set}"] );
 			}
+			$this->options['default_email_method'] = isset( $_POST["default_email_method"] ) ? 1 : 0;
 
 			$this->options['email_expiration'] = absint( $_POST["gglstpvrfctn_email_expiration"] );
 			$this->options['authenticator_time_window'] = absint( $_POST["gglstpvrfctn_authenticator_time_window"] );
@@ -138,27 +139,34 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 					<td>
 						<fieldset>
 							<label>
-								<input type="checkbox" value="1" name="gglstpvrfctn_method_email" <?php checked( 1, $this->options['methods']['email'] ); ?>/>&nbsp;<?php _e( 'Email', 'bws-google-2-step-verification' ); ?>
+								<input type="checkbox" class="bws_option_affect" value="1" name="gglstpvrfctn_method_email" data-affect-show=".gglstpvrfctn_email_settings" <?php checked( 1, $this->options['methods']['email'] ); ?>/>&nbsp;<?php _e( 'Email', 'bws-google-2-step-verification' ); ?>
 							</label><br>
 							<label>
-								<input type="checkbox" value="1" name="gglstpvrfctn_method_authenticator" <?php checked( 1, $this->options['methods']['authenticator'] ); ?>/>&nbsp;
-								<?php _e( 'Authenticator app', 'bws-google-2-step-verification' ); ?>
+								<input type="checkbox" value="1" name="gglstpvrfctn_method_authenticator" <?php checked( 1, $this->options['methods']['authenticator'] ); ?>/>&nbsp;<?php _e( 'Authenticator app', 'bws-google-2-step-verification' ); ?>
 							</label><br>
 							<label>
-								<input type="checkbox" value="1" name="gglstpvrfctn_method_backup_code" <?php checked( 1, $this->options['methods']['backup_code'] ); ?>/>&nbsp;
-								<?php _e( 'Backup codes', 'bws-google-2-step-verification' ); ?>
+								<input type="checkbox" value="1" name="gglstpvrfctn_method_backup_code" <?php checked( 1, $this->options['methods']['backup_code'] ); ?>/>&nbsp;<?php _e( 'Backup codes', 'bws-google-2-step-verification' ); ?>
 							</label><br>
 							<label>
-								<input type="checkbox" value="1" name="gglstpvrfctn_method_sms" <?php checked( 1, $this->options['methods']['sms'] ); ?>/>&nbsp;
-								<?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?>
+								<input type="checkbox" class="bws_option_affect" value="1" name="gglstpvrfctn_method_sms" data-affect-show=".gglstpvrfctn_sms_settings" <?php checked( 1, $this->options['methods']['sms'] ); ?>/>&nbsp;<?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?>
 							</label><br>
                             <label>
-                                <input type="checkbox" value="1" name="gglstpvrfctn_method_question" <?php checked( 1, $this->options['methods']['question'] ); ?>/>&nbsp;
-								<?php _e( 'Secret question', 'bws-google-2-step-verification' ); ?>
+                                <input type="checkbox" value="1" name="gglstpvrfctn_method_question" <?php checked( 1, $this->options['methods']['question'] ); ?>/>&nbsp;<?php _e( 'Secret question', 'bws-google-2-step-verification' ); ?>
                             </label>
 						</fieldset>
 					</td>
 				</tr>
+				<!-- Settings block for default verification -->
+                <tr class="gglstpvrfctn_email_settings">
+                    <th scope="row"><?php _e( 'Email Verification by Default ', 'bws-google-2-step-verification' ); ?></th>
+                    <td>
+                        <fieldset>
+                            <label>
+                                <input type="checkbox" value="1" name="default_email_method" <?php checked( 1, $this->options['default_email_method'] ); ?>/>&nbsp;<span class="bws_info"><?php _e( 'Enable to apply 2-step authentication via email to the new user by default.', 'bws-google-2-step-verification' ); ?></span>
+                            </label><br />
+                        </fieldset>
+                    </td>
+                </tr>
                 <?php if ( ! $this->hide_pro_tabs ) { ?>
                     </table>
                         <div class="bws_pro_version_bloc">
@@ -167,12 +175,12 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
                                 <div class="bws_table_bg"></div>
                                 <table class="form-table bws_pro_version">
                                     <tr valign="top">
-                                        <th scope="row"><?php _e( 'Verification Methods for Non-registered Users ', 'bws-google-2-step-verification-pro' ); ?></th>
+                                        <th scope="row"><?php _e( 'Verification Methods for Non-registered Users ', 'bws-google-2-step-verification' ); ?></th>
                                         <td>
                                             <fieldset>
                                                 <label>
                                                     <input <?php disabled( true ); ?> type="checkbox" value="1" name="gglstpvrfctn_method_unregister_sms" />&nbsp;
-				                                    <?php _e( 'SMS code', 'bws-google-2-step-verification-pro' ); ?>
+				                                    <?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?>
                                                 </label><br />
                                             </fieldset>
                                         </td>
@@ -183,24 +191,30 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
                             <?php $this->bws_pro_block_links(); ?>
                         </div>
                     <table class="form-table">
-                <?php } ?>
-				<tr  id="gglstpvrfctn_firebase_settings">
-					<th scope="row"><?php _e( 'Firebase Settings', 'bws-google-2-step-verification' ); ?></th>
+                <?php } ?>            	
+				<tr class="gglstpvrfctn_sms_settings">
+					<th scope="row"><?php _e( 'SMS Settings', 'bws-google-2-step-verification' ); ?></th>
 					<td>
 						<fieldset>
-							<span class="bws_info"><?php _e( 'Register your website in firebase console to get required API key and enter it below.', 'bws-google-2-step-verification' ); ?></span>&nbsp;<a href="https://console.firebase.google.com/" target="_blank"><?php _e( 'Go to Firebase', 'bws-google-2-step-verification' ); ?></a><br><br>
-                            <span class="bws_info"><?php _e( 'If your need help setting up the Firebase, please read our', 'bws-google-2-step-verification' ); ?>  </span>&nbsp;<a href="https://docs.google.com/document/d/1NZxoCsROJ6dVNJktSCb4mIfx4NjFLypLFsC5xG_NotU/" target="_blank"><?php _e( 'Step-by-step Instruction', 'bws-google-2-step-verification' ); ?></a><br><br>
-                            <label>
-								<input type="text" name="gglstpvrfctn_firebase_apikey" id="gglstpvrfctn_firebase_apikey" value="<?php echo($this->options['firebase']['apikey']) ?>" />&nbsp;<?php _e( 'API Key', 'bws-google-2-step-verification' ); ?>
-							</label><br><br>
-							<input type="button" class="button button-primary hide-if-no-js" id="gglstpvrfctn_firebase_test_button" value="<?php _e( 'Test Firebase SMS Auth', 'bws-google-2-step-verification' ); ?>" />
+							<span class="bws_info"><?php printf( '%s&nbsp;<a href="%2s" target="_blank">%3s</a>&nbsp;%4s', 
+							__( 'Register your website in', 'bws-google-2-step-verification' ),
+							'https://console.firebase.google.com/',
+							__( 'Firebase console', 'bws-google-2-step-verification' ),
+							__( 'to use the SMS code verification method. After registration add the API key into the field below.', 'bws-google-2-step-verification' ) ); ?>
+							</span><br><br>
+                            <span class="bws_info"><?php printf( '%s&nbsp;<a href="%2s" target="_blank">%3s</a>', 
+							__( 'Need help to setup a Firebase account?', 'bws-google-2-step-verification' ),
+							'https://docs.google.com/document/d/1NpFcZ7cjPf8ThbdRgad9Ezm_hpL9X4bWLrOcZ-tBS-8/',
+							__( 'Learn More', 'bws-google-2-step-verification' ), ); ?>
+							</span><br><br>
+                            <label><?php _e( 'API Key', 'bws-google-2-step-verification' ); ?></label><br>
+							<input type="text" name="gglstpvrfctn_firebase_apikey" id="gglstpvrfctn_firebase_apikey" value="<?php echo($this->options['firebase']['apikey']) ?>" /><br><br>
+							<input type="button" class="button hide-if-no-js" id="gglstpvrfctn_firebase_test_button" value="<?php _e( 'Test Firebase SMS Auth', 'bws-google-2-step-verification' ); ?>" />
 							<div class="hide-if-no-js" id="gglstpvrfctn_firebase_test">
-								<label id="gglstpvrfctn-phone-label">
-									<input type="tel" class="gglstpvrfctn-test-userphone" name="gglstpvrfctn_test_phone" placeholder="+1234567890" value="">
-									<span><?php _e( 'Test phone number', 'bws-google-2-step-verification' ); ?></span><br>
-									<span class="gglstpvrfctn-error"><?php _e( 'A valid phone number is required', 'bws-google-2-step-verification' ); ?></span>
-								</label><br>
-								<input type="button" class="button button-primary" id="gglstpvrfctn_firebase_test_sms" value="<?php _e( 'Send test SMS', 'bws-google-2-step-verification' ); ?>" />
+								<label id="gglstpvrfctn-phone-label"><?php _e( 'Test phone number', 'bws-google-2-step-verification' ); ?></label><br>
+								<input type="tel" class="gglstpvrfctn-test-userphone" name="gglstpvrfctn_test_phone" placeholder="+1234567890" value="">
+								<input type="button" class="button button-primary" id="gglstpvrfctn_firebase_test_sms" value="<?php _e( 'Send test SMS', 'bws-google-2-step-verification' ); ?>" /><br>
+								<span class="gglstpvrfctn-error"><?php _e( 'A valid phone number is required', 'bws-google-2-step-verification' ); ?></span>
 								<div id="gglstpvrfctn-test-recaptcha-container" style="transform: scale(0.9);-webkit-transform: scale(0.9);transform-origin :0 0;-webkit-transform-origin: 0 0;"></div>
 								<div id="gglstpvrfctn-test-code-label">
 									<label >
@@ -217,7 +231,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php _e( 'Allow Using Verification for', 'bws-google-2-step-verification' ); ?></th>
+					<th scope="row"><?php _e( 'Enable Verification for', 'bws-google-2-step-verification' ); ?></th>
 					<td>
 						<label>
 							<input type="checkbox" id="gglstpvrfctn-all-roles" name="gglstpvrfctn-all-roles" <?php checked( count( $this->options['enabled_roles'] ) == count( $this->editable_roles ) ); ?>/>&nbsp;
@@ -281,6 +295,14 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 						</fieldset>
 					</td>
 				</tr>
+			</table>
+		<?php }
+
+		public function tab_notifications() { ?>
+			<h3 class="bws_tab_label"><?php _e( '2-Step Notifications Settings', 'bws-google-2-step-verification' ); ?></h3>
+			<?php $this->help_phrase(); ?>
+			<hr>
+			<table class="form-table">
 				<tr>
 					<th scope="row"><?php _e( 'Email Notifications', 'bws-google-2-step-verification' ); ?></th>
 					<td>

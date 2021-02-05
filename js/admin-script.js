@@ -1,15 +1,6 @@
 (function( $ ) {
 	$( document ).ready(function() {
-
-		/* Plugin Settings Page */
-		$( '[name="gglstpvrfctn_method_sms"]' ).on( 'change', function() {
-			if ( $( this ).is( ':checked' ) ) {
-				$( '#gglstpvrfctn_firebase_settings' ).show();
-			} else {
-				$( '#gglstpvrfctn_firebase_settings' ).hide();
-			}
-		} ).trigger( 'change' );
-		
+	
 		/* Returns true if the phone number is valid. */
 		function isPhoneNumberValid() {
 		    var pattern = /^\+[0-9\s\-\(\)]{8,15}$/;

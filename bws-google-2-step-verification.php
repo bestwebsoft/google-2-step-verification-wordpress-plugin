@@ -6,12 +6,12 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.6
+Version: 1.0.7
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */
 
-/*  © Copyright 2019  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2021  BestWebSoft  ( https://support.bestwebsoft.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
@@ -31,43 +31,44 @@ License: GPLv3 or later
 if ( ! function_exists( 'gglstpvrfctn_admin_menu' ) ) {
 	function gglstpvrfctn_admin_menu() {
 		global $submenu, $gglstpvrfctn_plugin_info, $wp_version;
+		if ( ! is_plugin_active( 'bws-google-2-step-verification-pro/bws-google-2-step-verification-pro.php' ) ) {
+			add_menu_page(
+				'2-Step Verification', /* $page_title */
+				'2-Step', /* $menu_title */
+				'manage_options', /* $capability */
+				'google-2-step-verification.php', /* $menu_slug */
+				'gglstpvrfctn_settings_page', /* $callable_function */
+				'none' /* $icon_url */
+			);
 
-		add_menu_page(
-			'2-Step Verification', /* $page_title */
-			'2-Step', /* $menu_title */
-			'manage_options', /* $capability */
-			'google-2-step-verification.php', /* $menu_slug */
-			'gglstpvrfctn_settings_page', /* $callable_function */
-			'none' /* $icon_url */
-		);
+			$settings = add_submenu_page(
+				'google-2-step-verification.php', /* $parent_slug */
+				'2-Step Verification', /* $page_title */
+				__( 'Settings', 'bws-google-2-step-verification' ), /* $menu_title */
+				'manage_options', /* $capability */
+				'google-2-step-verification.php', /* $menu_slug */
+				'gglstpvrfctn_settings_page' /* $callable_function */
+			);
 
-		$settings = add_submenu_page(
-			'google-2-step-verification.php', /* $parent_slug */
-			'2-Step Verification', /* $page_title */
-			__( 'Settings', 'bws-google-2-step-verification' ), /* $menu_title */
-			'manage_options', /* $capability */
-			'google-2-step-verification.php', /* $menu_slug */
-			'gglstpvrfctn_settings_page' /* $callable_function */
-		);
+			add_submenu_page(
+				'google-2-step-verification.php', /* $parent_slug */
+				'BWS Panel', /* $page_title */
+				'BWS Panel', /* $menu_title */
+				'manage_options', /* $capability */
+				'gglstpvrfctn-bws-panel', /* $menu_slug */
+				'bws_add_menu_render' /* $callable_function */
+			);
 
-		add_submenu_page(
-			'google-2-step-verification.php', /* $parent_slug */
-			'BWS Panel', /* $page_title */
-			'BWS Panel', /* $menu_title */
-			'manage_options', /* $capability */
-			'gglstpvrfctn-bws-panel', /* $menu_slug */
-			'bws_add_menu_render' /* $callable_function */
-		);
+			/* Add "Go Pro" submenu link */
+			if ( isset( $submenu['google-2-step-verification.php'] ) ) {
+				$submenu['google-2-step-verification.php'][] = array(
+					'<span style="color:#d86463"> ' . __( 'Upgrade to Pro', 'bws-google-2-step-verification' ) . '</span>',
+					'manage_options',
+					'https://bestwebsoft.com/products/wordpress/plugins/google-2-step-verification/?k=cafb0895a5730b761de64b55183d7a5b&pn=670&v=' . $gglstpvrfctn_plugin_info["Version"] . '&wp_v=' . $wp_version );
+			}
 
-		/* Add "Go Pro" submenu link */
-		if ( isset( $submenu['google-2-step-verification.php'] ) ) {
-			$submenu['google-2-step-verification.php'][] = array(
-				'<span style="color:#d86463"> ' . __( 'Upgrade to Pro', 'bws-google-2-step-verification' ) . '</span>',
-				'manage_options',
-				'https://bestwebsoft.com/products/wordpress/plugins/google-2-step-verification/?k=cafb0895a5730b761de64b55183d7a5b&pn=670&v=' . $gglstpvrfctn_plugin_info["Version"] . '&wp_v=' . $wp_version );
+			add_action( 'load-' . $settings, 'gglstpvrfctn_add_tabs' );
 		}
-
-		add_action( 'load-' . $settings, 'gglstpvrfctn_add_tabs' );
 	}
 }
 
@@ -124,6 +125,8 @@ if ( ! function_exists( 'gglstpvrfctn_init' ) ) {
 			/* Default Register form */
 			add_action( 'register_form', 'gglstpvrfctn_login_form', 99 );
 			add_action( 'registration_errors', 'gglstpvrfctn_register_check', 10, 1 );
+			if ( is_multisite() )
+				add_action( 'signup_header', 'gglstpvrfctn_login_form', 99 );
 		}
 	}
 }
@@ -132,6 +135,7 @@ if ( ! function_exists( 'gglstpvrfctn_init' ) ) {
 if ( ! function_exists( 'gglstpvrfctn_admin_init' ) ) {
 	function gglstpvrfctn_admin_init() {
 		/* Add variable for bws_menu */
+
 		global $pagenow, $current_user,
 			$bws_plugin_info,
 			$gglstpvrfctn_plugin_info, $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods;
@@ -177,6 +181,10 @@ if ( ! function_exists( 'gglstpvrfctn_settings' ) ) {
 			$options_default = gglstpvrfctn_get_options_default();
 			$gglstpvrfctn_options = array_replace_recursive( $options_default, $gglstpvrfctn_options );
 			$gglstpvrfctn_options['plugin_option_version'] = $gglstpvrfctn_plugin_info["Version"];
+
+			/* show pro features */
+			$gglstpvrfctn_options['hide_premium_options'] = array();
+
 			$update_option = true;
 		}
 
@@ -213,6 +221,7 @@ if ( ! function_exists( 'gglstpvrfctn_get_options_default' ) ) {
 				'sms'							=> 0,
                 'question'						=> 0
 			),
+			'default_email_method'			=> 0,
 			'authenticator_time_window'		=> 0, /* Time window for authenticator app in minutes. 0 - use default(30 sec) */
 			'email_expiration'				=> 3, /* Email code expiration time in minutes */
 			'notification_fail'				=> 0, /* Allow enabling notifications about failed attempts */
@@ -312,7 +321,7 @@ if ( ! function_exists( 'gglstpvrfctn_authenticate' ) ) {
 if ( ! function_exists( 'gglstpvrfctn_request_email' ) ) {
 	function gglstpvrfctn_request_email( $user_id ) {
 		global $gglstpvrfctn_enabled_methods, $gglstpvrfctn_user_options;
-
+		
 		if ( empty( $gglstpvrfctn_user_options ) ) {
 			gglstpvrfctn_get_user_options( $user_id );
 		}
@@ -345,7 +354,7 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods;
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 
-		if ( empty( $user_options['enabled'] ) ) {
+		if ( empty( $user_options['enabled'] ) || ( 1 == $gglstpvrfctn_options['default_email_method'] && 1 == $user_options['enabled'] && $_REQUEST['action'] == 'register' ) ) {
 			return true;
 		}
 
@@ -439,12 +448,12 @@ if ( ! function_exists( 'gglstpvrfctn_admin_enqueue_scripts' ) ) {
 			if ( isset( $_GET['page'] ) && 'google-2-step-verification.php' == $_GET['page'] ) {
 				bws_enqueue_settings_scripts();
 				bws_plugins_include_codemirror();
+				wp_enqueue_script( 'gglstpvrfctn_firebase_app_script', plugins_url( 'js/firebase/firebase-app.js', __FILE__ ) );
+				wp_enqueue_script( 'gglstpvrfctn_firebase_auth_script', plugins_url( 'js/firebase/firebase-auth.js', __FILE__ ) );
+				wp_enqueue_script( 'gglstpvrfctn_firebase_check_code_script', plugins_url( 'js/firebase/firebase-validate-code.js', __FILE__ ) );
 			}
 			wp_enqueue_style( 'gglstpvrfctn_stylesheet', plugins_url( 'css/admin-style.css', __FILE__ ), array(), $gglstpvrfctn_plugin_info['Version'] );
 			wp_enqueue_script( 'gglstpvrfctn_admin_script', plugins_url( 'js/admin-script.js', __FILE__ ), array( 'jquery' ), $gglstpvrfctn_plugin_info['Version'] );
-			wp_enqueue_script( 'gglstpvrfctn_firebase_app_script', plugins_url( 'js/firebase/firebase-app.js', __FILE__ ) );
-			wp_enqueue_script( 'gglstpvrfctn_firebase_auth_script', plugins_url( 'js/firebase/firebase-auth.js', __FILE__ ) );
-			wp_enqueue_script( 'gglstpvrfctn_firebase_check_code_script', plugins_url( 'js/firebase/firebase-validate-code.js', __FILE__ ) );
 
 			$admin_script_vars = array(
 				'invalid_sms_message'	=> __( 'SMS not sent. Your API key is invalid','bws-google-2-step-verification' ),
@@ -983,7 +992,6 @@ if ( ! function_exists( 'gglstpvrfctn_get_user_options' ) ) {
 		} else {
 			$gglstpvrfctn_user_options = json_decode( $gglstpvrfctn_user_options, true );
 		}
-
 		if ( is_array( $gglstpvrfctn_user_options ) ) {
 			return $gglstpvrfctn_user_options;
 		}
@@ -1804,7 +1812,7 @@ if ( ! function_exists ( 'gglstpvrfctn_links' ) ) {
 	function gglstpvrfctn_links( $links, $file ) {
 		$base = plugin_basename( __FILE__ );
 		if ( $file == $base ) {
-			if ( ! is_network_admin() ) {
+			if ( ! is_network_admin() && ! is_plugin_active( 'bws-google-2-step-verification-pro/bws-google-2-step-verification-pro.php' ) ) {
 				$links[]	=	'<a href="admin.php?page=google-2-step-verification.php">' . __( 'Settings', 'bws-google-2-step-verification' ) . '</a>';
 			}
 			$links[]	=	'<a href="https://support.bestwebsoft.com/hc/en-us/sections/115000850886" target="_blank">' . __( 'FAQ', 'bws-google-2-step-verification' ) . '</a>';
@@ -1929,10 +1937,10 @@ if ( ! function_exists( 'gglstpvrfctn_register_check' ) ) {
 		$login = sanitize_user( $_POST['user_login'] );
 		$email = sanitize_email( $_POST['user_email'] );
 
-		if ( empty( $allow->errors ) && ! gglstpvrfctn_check_sms_code( $email, $login ) ) {
+		if ( empty( $allow->errors ) ) {
 			$allow->add( 'gglstpvrfctn_errors', 'Failed 2-Step verification' );
 		}
-
+		
 		return $allow;
 	}
 }
@@ -1999,6 +2007,19 @@ if ( ! function_exists( 'gglstpvrfctn_delete_options' ) ) {
 	}
 }
 
+if ( ! function_exists( 'gglstpvrfctn_set_email_verification' ) ) {
+	function gglstpvrfctn_set_email_verification( $user_id ) {
+		global $gglstpvrfctn_options;		
+		if ( 1 == $gglstpvrfctn_options['default_email_method'] ) {
+			$user_options = array();
+			$user_options['enabled'] = 1;
+			$user_options['email']   = 1;
+			
+			update_user_meta( $user_id, 'gglstpvrfctn_user_options', json_encode($user_options) );
+		}
+	}
+}
+
 register_activation_hook( __FILE__, 'gglstpvrfctn_plugin_activate' );
 
 /* Calling a function add administrative menu. */
@@ -2018,6 +2039,9 @@ add_action( 'network_admin_admin_notices', 'gglstpvrfctn_plugin_banner' );
 add_filter( 'plugin_action_links', 'gglstpvrfctn_action_links', 10, 2 );
 add_filter( 'network_admin_plugin_action_links', 'gglstpvrfctn_action_links', 10, 2 );
 add_filter( 'plugin_row_meta', 'gglstpvrfctn_links', 10, 2 );
+
+/* Set verification email by default */
+add_action( 'user_register', 'gglstpvrfctn_set_email_verification' );
 
 /* Get new secret on user personal settings page */
 add_action( 'wp_ajax_gglstpvrfctn_get_new_secret', 'gglstpvrfctn_get_new_secret' );
