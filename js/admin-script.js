@@ -44,7 +44,8 @@
 						    apiKey: $( '#gglstpvrfctn_firebase_apikey' ).val(),
 						};
 				firebase.initializeApp( config );
-				window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( 'gglstpvrfctn-test-recaptcha-container' );
+				$( '#gglstpvrfctn-test-recaptcha-container' ).css( "display", "none" );
+				window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( 'gglstpvrfctn-test-recaptcha-container', { 'size': 'invisible' } );
 				var phoneNumber = $('.gglstpvrfctn-test-userphone').val();
 				$( '#gglstpvrfctn_firebase_test_sms' ).hide();
 				$( '#gglstpvrfctn-phone-label' ).hide();
@@ -53,7 +54,6 @@
 				     	// SMS sent. Prompt user to type the code from the message, then sign the
 				      	// user in with confirmationResult.confirm(code).
 				      	$( '#gglstpvrfctn-test-code-label' ).show();
-				      	$( '#gglstpvrfctn-test-recaptcha-container' ).hide();      	
 						window.confirmationResult = confirmationResult;
 				    } ).catch( function ( error ) {
 				      	// Error; SMS not sent

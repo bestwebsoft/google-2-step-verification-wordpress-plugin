@@ -205,7 +205,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
                             <span class="bws_info"><?php printf( '%s&nbsp;<a href="%2s" target="_blank">%3s</a>', 
 							__( 'Need help to setup a Firebase account?', 'bws-google-2-step-verification' ),
 							'https://docs.google.com/document/d/1NpFcZ7cjPf8ThbdRgad9Ezm_hpL9X4bWLrOcZ-tBS-8/',
-							__( 'Learn More', 'bws-google-2-step-verification' ), ); ?>
+							__( 'Learn More', 'bws-google-2-step-verification' ) ); ?>
 							</span><br><br>
                             <label><?php _e( 'API Key', 'bws-google-2-step-verification' ); ?></label><br>
 							<input type="text" name="gglstpvrfctn_firebase_apikey" id="gglstpvrfctn_firebase_apikey" value="<?php echo($this->options['firebase']['apikey']) ?>" /><br><br>

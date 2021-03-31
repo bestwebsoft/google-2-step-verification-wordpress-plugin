@@ -6,7 +6,7 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.7
+Version: 1.0.8
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */
@@ -354,7 +354,7 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods;
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 
-		if ( empty( $user_options['enabled'] ) || ( 1 == $gglstpvrfctn_options['default_email_method'] && 1 == $user_options['enabled'] && $_REQUEST['action'] == 'register' ) ) {
+		if ( empty( $user_options['enabled'] ) || ( 1 == $gglstpvrfctn_options['default_email_method'] && 1 == $user_options['enabled'] && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'register' ) ) {
 			return true;
 		}
 
@@ -362,7 +362,7 @@ if ( ! function_exists( 'gglstpvrfctn_verify_code' ) ) {
 
 		$check = false;
 
-		$code = trim( stripslashes( sanitize_text_field( $code ) ) );
+		$code = trim( stripslashes( esc_html( $code ) ) );
 		$code = str_replace( array( " ", "-", ".", "\t", "\n", "\0", "\x0B" ), '', $code );
 
 		$backup_codes = get_user_meta( $user_id, 'gglstpvrfctn_backup_code' );
@@ -418,7 +418,9 @@ if ( ! function_exists( 'gglstpvrfctn_settings_page' ) ) {
 		if ( ! class_exists( 'Bws_Settings_Tabs' ) )
             require_once( dirname( __FILE__ ) . '/bws_menu/class-bws-settings.php' );
 		require_once( dirname( __FILE__ ) . '/includes/class-gglstpvrfctn-settings.php' );
-		$page = new Gglstpvrfctn_Settings_Tabs( plugin_basename( __FILE__ ) ); ?>
+		$page = new Gglstpvrfctn_Settings_Tabs( plugin_basename( __FILE__ ) ); 
+		if ( method_exists( $page,'add_request_feature' ) )
+			$page->add_request_feature(); ?>
 		<div class="wrap gglstpvrfctn-wrap">
 			<h1>2-Step Verification <?php _e( 'Settings', 'bws-google-2-step-verification' ); ?></h1>
 			<?php $page->display_content(); ?>
@@ -1597,7 +1599,7 @@ if ( ! function_exists( 'gglstpvrfctn_show_user_profile' ) ) {
 /* Adding "2-Step Verification" block to the Edit User page */
 if ( ! function_exists( 'gglstpvrfctn_edit_user_profile' ) ) {
 	function gglstpvrfctn_edit_user_profile() {
-		global $gglstpvrfctn_options, $current_user;
+		global $gglstpvrfctn_options, $gglstpvrfctn_enabled_methods, $current_user;
 
 		$user_id = isset( $_REQUEST['user_id'] ) ? intval( $_REQUEST['user_id'] ) : $current_user->ID;
 		$user = ( $user_id == $current_user->ID ) ? $current_user : get_userdata( $user_id );
@@ -1618,7 +1620,7 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile' ) ) {
 				</th>
 				<td>
 					<label>
-						<input type="checkbox" class="gglstpvrfctn-enabled" name="gglstpvrfctn-enabled" id="gglstpvrfctn-enabled" value="1" <?php checked( $enabled ); ?> >
+						<input type="checkbox" class="gglstpvrfctn-enabled  bws_option_affect" name="gglstpvrfctn-enabled" id="gglstpvrfctn-enabled" data-affect-show="#gglstpvrfctn-settings-wrapper" value="1" <?php checked( $enabled ); ?> >
 						<span class="bws_info">
 							<?php _e( 'Enable if you want the user to use 2-Step Verification.', 'bws-google-2-step-verification' ); ?>
 						</span>
@@ -1626,6 +1628,34 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile' ) ) {
 				</td>
 			</tr>
 		</table>
+		<div id="gglstpvrfctn-settings-wrapper">
+			<table class="form-table">
+				<tr>
+					<th><?php _e( 'Verification Methods', 'bws-google-2-step-verification' ); ?></th>
+					<td>
+						<fieldset>
+							<?php if ( isset( $gglstpvrfctn_enabled_methods['email'] ) ) { ?>
+								<label>
+									<input type="checkbox" class="gglstpvrfctn-methods" name="gglstpvrfctn_email" data-method="email" value="1" <?php checked( ! empty( $user_options[ 'email' ] ) ); ?> >
+									<span><?php _e( 'Email', 'bws-google-2-step-verification' ); ?></span>
+								</label><br>
+							<?php }
+							if ( isset( $gglstpvrfctn_enabled_methods['sms'] ) ) { ?>
+								<label>
+									<input type="checkbox" class="gglstpvrfctn-methods bws_option_affect" name="gglstpvrfctn_sms" data-affect-show="#gglstpvrfctn-phone-label" data-method="sms" value="1" <?php checked( ! empty( $user_options[ 'sms' ] ) ); ?> >
+									<span><?php _e( 'SMS code', 'bws-google-2-step-verification' ); ?></span>
+								</label><br>
+								<label id="gglstpvrfctn-phone-label">
+									<span><?php _e( 'Phone number', 'bws-google-2-step-verification' ); ?></span><br>
+									<input type="tel" class="gglstpvrfctn-userphone" name="gglstpvrfctn_phone" required="required" placeholder="+1234567890" value="<?php if ( ! empty( $user_options[ 'phone' ] ) ) {  echo $user_options[ 'phone' ]; } ?>">
+									<span class="gglstpvrfctn-error"><?php _e( 'A valid phone number is required', 'bws-google-2-step-verification' ); ?></span>
+								</label><br>
+							<?php } ?>
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+		</div><!-- #gglstpvrfctn-settings-wrapper -->
 	<?php }
 }
 
@@ -1714,10 +1744,10 @@ if ( ! function_exists( 'gglstpvrfctn_edit_user_profile_update' ) ) {
 		$user_options = gglstpvrfctn_get_user_options( $user_id );
 
 		$user_options['enabled'] = isset( $_REQUEST['gglstpvrfctn-enabled'] ) ? 1 : 0;
-		/* At least one method have to be enabled if verification is enabled, email is the only suitable */
-		if ( ! empty( $user_options['enabled'] ) ) {
-			$user_options['email'] = 1;
-		}
+		$user_options['email'] = isset( $_REQUEST["gglstpvrfctn_email"] ) ? 1 : 0;
+		$user_options['sms'] = isset( $_REQUEST["gglstpvrfctn_sms"] ) ? 1 : 0;
+		$user_options['phone'] = sanitize_text_field( $_REQUEST['gglstpvrfctn_phone'] );
+
 		update_user_meta( $user_id, 'gglstpvrfctn_user_options', json_encode( $user_options ) );
 	}
 }

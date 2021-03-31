@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 4.5
-Tested up to: 5.6.1
-Stable tag: 1.0.7
+Tested up to: 5.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ Stronger security solution which protects your WordPress website from hacks and 
 2-Step Verification plugin is the best security solution that protects your WordPress website from phishing and passwords stealing. Each user can configure their profile settings and add additional verification step to the login form.
 
 Protect your WordPress website with 2-Step Verification now!
+
+[View Demo](https://bestwebsoft.com/demo-2-step-verification/?ref=readme)
 
 = Free Features =
 
@@ -138,7 +140,15 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
-= V1.0.7 - 05.02.2021 =
+= V1.0.8 - 12.03.2021 =
+* NEW : Ability to edit authentication via email and SMS verificatication for users from administrator profile.
+* Update : In SMS verification implemented invisible recaptcha instead of recaptcha v2.
+* Update : All functionality for WordPress 5.7 was updated.
+* Update : BWS Panel section is updated.
+* Bugfix : Settings page issue was fixed.
+* Bugfix : SMS verification was fixed.
+
+= V1.0.7 - 04.02.2021 =
 * NEW : Ability 2-step authentication via email to the new user by default.
 * NEW : The Polish language file is added.
 * Update : The plugin settings page has been updated.
@@ -169,6 +179,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.8 =
+* New features added.
+* Bugs fixed.
+* The compatibility with new WordPress version updated.
+* Plugin optimization completed.
 
 = V1.0.7 =
 * New features added.

@@ -118,7 +118,8 @@
 						    apiKey: data['apikey']
 						};
 						firebase.initializeApp( config );
-						window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( 'gglstpvrfctn-recaptcha-container' );
+						$( '#gglstpvrfctn-recaptcha-container' ).css( "display", "none" );
+						window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( 'gglstpvrfctn-recaptcha-container', { 'size': 'invisible' } );
 						var phoneNumber = data['phone'];
 						$( '#gglstpvrfctn-code' ).prop( 'disabled' , true);
 						$( '.gglstpvrfctn-request-sms' ).hide();
@@ -133,7 +134,6 @@
 								}
 						      	window.confirmationResult = confirmationResult;
 						      	$( '#gglstpvrfctn-code' ).prop( 'disabled', false );
-						      	$( '#gglstpvrfctn-recaptcha-container' ).hide();
 
 							    $( '#gglstpvrfctn-code' ).trigger( 'focus' );
 						    } ).catch( function ( error ) {
