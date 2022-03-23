@@ -6,7 +6,7 @@ Description: Stronger security solution which protects your WordPress website fr
 Author: BestWebSoft
 Text Domain: bws-google-2-step-verification
 Domain Path: /languages
-Version: 1.0.8
+Version: 1.0.9
 Author URI: https://bestwebsoft.com/
 License: GPLv3 or later
 */

@@ -1,10 +1,10 @@
-﻿=== 2-Step Verification by BestWebSoft ===
+﻿=== 2-Step Verification by BestWebSoft - WordPress Anti-spam and Anti Hacker Plugin ===
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 4.5
-Tested up to: 5.7
-Stable tag: 1.0.8
+Tested up to: 5.9
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -140,6 +140,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.9 - 22.03.2022 =
+* Update : Functionality for WordPress 5.9 was updated.
+* Update : BWS Panel section is updated.
+
 = V1.0.8 - 12.03.2021 =
 * NEW : Ability to edit authentication via email and SMS verificatication for users from administrator profile.
 * Update : In SMS verification implemented invisible recaptcha instead of recaptcha v2.
@@ -179,6 +183,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.0.9 =
+* Usability improved.
 
 = V1.0.8 =
 * New features added.
