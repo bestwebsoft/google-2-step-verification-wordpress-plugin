@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 4.5
-Tested up to: 5.9
-Stable tag: 1.0.9
+Tested up to: 6.5
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,8 +65,8 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation =
 
-* [[Doc] User Guide](https://docs.google.com/document/d/1NpFcZ7cjPf8ThbdRgad9Ezm_hpL9X4bWLrOcZ-tBS-8/)
-* [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
+* [[Doc] User Guide](https://bestwebsoft.com/documentation/2-step-verification/2-step-verification-user-guide/)
+* [[Doc] Installation](https://bestwebsoft.com/documentation/how-to-install-a-wordpress-product/how-to-install-a-wordpress-plugin/)
 
 = Help & Support =
 
@@ -127,7 +127,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: [Instruction on System Status](https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit)
+4. copy and paste into the message your system status report. Please read more here: [Instruction on System Status](https://bestwebsoft.com/documentation/admin-panel-issues/system-status/)
 
 == Screenshots ==
 
@@ -139,6 +139,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 6. 2-Step Verification on the Register page.
 
 == Changelog ==
+
+= V1.1.1 - 24.05.2024 =
+* Bugfix : Compatibility with Woocommerce login and registration form has been fixed.
+* Update : All functionality for WordPress 6.5 was updated.
+* Update : BWS Panel section is updated.
+
+= V1.1.0 - 26.04.2022 =
+* Bugfix : Deactivation Feedback fix.
 
 = V1.0.9 - 22.03.2022 =
 * Update : Functionality for WordPress 5.9 was updated.
@@ -183,6 +191,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.1.1 =
+* Bug fixed.
+* The compatibility with new WordPress version updated.
+* Plugin optimization completed.
+
+= V1.1.0 =
+* Bug fixed.
 
 = V1.0.9 =
 * Usability improved.
