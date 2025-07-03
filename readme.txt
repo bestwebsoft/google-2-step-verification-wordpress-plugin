@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: google, google authenticator, 2-step authentication, 2-factor verification, google verification, 2FA, google autentificator, two factor authentication, secure wordpress authentication, wordpress verification code, wordpress  authentication code, protect login form
 Requires at least: 4.5
-Tested up to: 6.5
-Stable tag: 1.1.1
+Tested up to: 6.8
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,6 @@ Protect your WordPress website with 2-Step Verification now!
 	* Authenticator app code
 	* Email code
 	* Backup codes
-	* SMS code
 	* Secret question
 * Select the user roles that can use 2-Step Verification
 	* All user roles
@@ -77,6 +76,11 @@ Visit our Help Center if you have any questions, our friendly Support Team is ha
 * Polish (pl_PL) (thanks to [Trui](mailto:klockiewicz@trui.pl))
 * Russian (ru_RU)
 * Ukrainian (uk)
+* Spanish (Spain) (es_SP)
+* French (fr_FR)
+* Italian (it_IT)
+* Arabic (ar)
+* German (de_DE)
 
 Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](https://www.poedit.net/download.php).
 
@@ -140,6 +144,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.1.3 - 03.07.2025 =
+* Update : SMS Verification feature has been canceled.
+* Update : All functionality for WordPress 6.8 was updated.
+
 = V1.1.1 - 24.05.2024 =
 * Bugfix : Compatibility with Woocommerce login and registration form has been fixed.
 * Update : All functionality for WordPress 6.5 was updated.
@@ -191,6 +199,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Plugin has been released.
 
 == Upgrade Notice ==
+
+= V1.1.3 =
+* The compatibility with new WordPress version updated.
+* Plugin optimization completed.
 
 = V1.1.1 =
 * Bug fixed.

@@ -12,7 +12,6 @@
 <li>Authenticator app code</li>
 <li>Email code</li>
 <li>Backup codes</li>
-<li>SMS code</li>
 <li>Secret question</li>
 </ul>
 </li>
@@ -78,6 +77,11 @@
 <li>Polish (pl_PL) (thanks to <a href="mailto:&#x6b;&#108;&#111;&#x63;&#107;&#105;&#x65;&#119;&#x69;&#x63;&#122;&#x40;&#x74;&#114;&#x75;i&#046;&#x70;&#108;" rel="nofollow ugc">Trui</a>)</li>
 <li>Russian (ru_RU)</li>
 <li>Ukrainian (uk)</li>
+<li>Spanish (Spain) (es_SP)</li>
+<li>French (fr_FR)</li>
+<li>Italian (it_IT)</li>
+<li>Arabic (ar)</li>
+<li>German (de_DE)</li>
 </ul>
 <p>Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send <a href="https://codex.wordpress.org/Translating_WordPress" rel="nofollow ugc">the text of PO and MO files</a> to <a href="https://support.bestwebsoft.com/hc/en-us/requests/new" rel="nofollow ugc">BestWebSoft</a> and we&#8217;ll add it to the plugin. You can download the latest version of the program for work with PO and MO <a href="https://www.poedit.net/download.php" rel="nofollow ugc">files Poedit</a>.</p>
 <h4>Recommended Plugins</h4>

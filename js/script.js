@@ -4,12 +4,11 @@
 		var clicks_number     = 0;
 		var expiration        = 0;
 		var minute_in_seconds = 60000;
-		var codeInputTimeout  = 60000; /* Set the time in milliseconds (e.g., 60 seconds) */
 		var authenticatorTimeWindow = gglstpvrfctnLoginVars.authenticatorTimeWindow * 60 * 1000;
 
 		setTimeout(function() {
 			$('.gglstpvrfctn-lostpassword-wrap, .gglstpvrfctn-register-wrap, #gglstpvrfctn-see-question, .gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, .gglstpvrfctn-request-sms, .gglstpvrfctn-resending').hide();
-		}, codeInputTimeout);
+		}, authenticatorTimeWindow );
 
 		$( '.gglstpvrfctn-login-wrap, .gglstpvrfctn-request-email, #gglstpvrfctn-see-question, .gglstpvrfctn-request-sms, .gglstpvrfctn-resending' ).hide();
 

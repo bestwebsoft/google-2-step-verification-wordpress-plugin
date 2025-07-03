@@ -71,7 +71,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 				'email',
 				'authenticator',
 				'backup_code',
-				'sms',
+				//'sms',
 				'question',
 			);
 			$submit_checkboxes = array(
@@ -167,9 +167,9 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 							<label>
 								<input type="checkbox" value="1" name="gglstpvrfctn_method_backup_code" <?php checked( 1, $this->options['methods']['backup_code'] ); ?>/>&nbsp;<?php esc_html_e( 'Backup codes', 'bws-google-2-step-verification' ); ?>
 							</label><br>
-							<label>
+							<!--<label>
 								<input type="checkbox" class="bws_option_affect" value="1" name="gglstpvrfctn_method_sms" data-affect-show=".gglstpvrfctn_sms_settings" <?php checked( 1, $this->options['methods']['sms'] ); ?>/>&nbsp;<?php esc_html_e( 'SMS code', 'bws-google-2-step-verification' ); ?>
-							</label><br>
+							</label><br>-->
 							<label>
 								<input type="checkbox" value="1" name="gglstpvrfctn_method_question" <?php checked( 1, $this->options['methods']['question'] ); ?>/>&nbsp;<?php esc_html_e( 'Secret question', 'bws-google-2-step-verification' ); ?>
 							</label>
@@ -187,7 +187,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 						</fieldset>
 					</td>
 				</tr>
-				<?php if ( ! $this->hide_pro_tabs ) { ?>
+				<!--<?php if ( ! $this->hide_pro_tabs ) { ?>
 					</table>
 						<div class="bws_pro_version_bloc">
 						<div class="bws_pro_version_table_bloc">
@@ -258,7 +258,7 @@ if ( ! class_exists( 'Gglstpvrfctn_Settings_Tabs' ) ) {
 							</div>
 						</fieldset>
 					</td>
-				</tr>
+				</tr>-->
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Enable Verification for', 'bws-google-2-step-verification' ); ?></th>
 					<td>
